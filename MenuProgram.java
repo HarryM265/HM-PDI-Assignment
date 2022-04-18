@@ -9,7 +9,7 @@ Description: Program that takes user input of viewing values of Netflix TV shows
 
 import java.util.*;
 
-public class TaskTwo {
+public class MenuProgram {
 //(Netflix program analyser)
 
     public static void main(String[] args) {

@@ -37,8 +37,15 @@ public class MenuProgram {
         A scanner system.in function is how the program accepts user input*/
 
         //TODO data entry
+        CovidRecord[] testCovidRecordArray = new CovidRecord[1784];
+        for (int i = 0; i < testCovidRecordArray.length; i++) {
+            testCovidRecordArray[i] = new CovidRecord();
+        }
+        for (int i = 0; i < testCovidRecordArray.length; i++) {
+            System.out.println(testCovidRecordArray[i].toString() + "\n");
+        }
         //Calc number of entries (records) and set to int XYZ
-        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of 'XYZ' records have been loaded.\n");
+        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + testCovidRecordArray.length + " records have been loaded.\n");
 
         String[] menu1 = new String[10];
         menu1[0] = "All countries";
@@ -70,7 +77,7 @@ public class MenuProgram {
                 p = outputMenu(sc, menu1); 
                 if(p == 1) {
                     //All Countries
-
+                    
                 } else if(p == 2) {
                     //Countries in South America
 

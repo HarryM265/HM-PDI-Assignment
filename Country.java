@@ -80,19 +80,18 @@ public class Country {
         lon = pLon;
     }
 
-    /* MAY NOT NEED THESE ***********************************************
     //toString method
     public String toString() {
         String countryString;
         countryString = "iso3: " + iso3 + 
-                        "\nContinent: " + continent + 
-                        "\nCountry Name: " + countryName + 
-                        "\nNuts: " + nuts + 
+                        ", Continent: " + continent + 
+                        ", Country Name: " + countryName + 
+                        ", Nuts: " + nuts + 
                         "\nLatitude: " + lat +
                         "\nLongitude: " + lon;
         return countryString;
     }
-
+    /* May NOT NEED THIS ***************
     //Equals method
     public boolean Equals(Object inObject) {
         boolean isEqual = false;

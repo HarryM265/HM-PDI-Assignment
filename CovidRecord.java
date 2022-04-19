@@ -73,4 +73,16 @@ public class CovidRecord extends Country{
     public void setIntensiveCare(int pIntensiveCare) {
         intensiveCare = pIntensiveCare;
     }
+
+    public String toString() {
+        String tempString = super.toString();
+        String covidRecordString;
+        covidRecordString = tempString + 
+                            "\nCumulatively Positive: " + cumulativePos + 
+                            "\nCumulatively Deceased: " + cumulativeDec +
+                            "\nCumulatively Recovered: " + cumulativeRec +
+                            "\nHospitalised: " + hospitalised + ", Intensive Care: " + intensiveCare;
+        return covidRecordString;
+    }
+
 }

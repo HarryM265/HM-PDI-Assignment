@@ -82,8 +82,7 @@ public class MenuProgram {
                     run = false; //(used in the do-while loop)
                 } else if(p == 1) {
                     //All Countries
-                    a = outputMenu(sc, menu2);
-                    displayStatistic(a, testCovidRecordArray);
+                    displayStatistic(sc, menu2, testCovidRecordArray, menu1, p);
                 } else if (p == 2) {
                     //Countries in South America
 
@@ -157,12 +156,49 @@ public class MenuProgram {
         return a;
     }
 
-    public static void displayStatistic(int p, CovidRecord[] testCovidRecordArray) {
-        if (p == 1) {
-                        
-        } else {
-            
-        }
+    public static void displayStatistic(Scanner sc, String[] statMenuArray, CovidRecord[] covidRecordArray, String[] mainMenu, int mainMenuChoice) {
+        int p;
+        boolean run = true;
+        do {
+            p = outputMenu(sc, statMenuArray);
+
+            if (p == 0) {
+                //Exit Code
+                run = false;
+                System.out.println("Going Back...");
+            } else if (p == 1) {
+                //Total cumulative pos
+                int a;
+                int[] cumPosArray = new int[1784];
+                for (int i = 0; i < cumPosArray.length; i++) {
+                    cumPosArray[i] = covidRecordArray[i].getCumulativePos();
+                }
+                a = calcTotal(cumPosArray);
+                System.out.println("Cumulative number of positive cases in " + mainMenu[mainMenuChoice] + ": " + a);
+            } else if (p == 2) {
+                //Total cumulative dec
+
+            } else if (p == 3) {
+                //Total cumulative rec
+
+            } else if (p == 4) {
+                //Avg daily number of positive cases
+
+            } else if (p == 5) {
+                //Num and % of cumulative pos
+
+            } else if (p == 6) {
+                //Num and % of cumulative dec
+
+            } else if (p == 7) {
+                //All of the above
+
+            } else {
+                System.out.println("Input is an invalid menu ID, please try again: \n");
+                //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
+            }
+        } while (run);
+        
     }
 
     /*

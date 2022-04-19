@@ -38,7 +38,7 @@ public class MenuProgram {
 
         //TODO data entry
         //Calc number of entries (records) and set to int XYZ
-        outputString("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of 'XYZ' records have been loaded.\n");
+        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of 'XYZ' records have been loaded.\n");
 
         String[] menu1 = new String[10];
         menu1[0] = "All countries";
@@ -97,17 +97,17 @@ public class MenuProgram {
                     
                 } else if(p == 10) {
                     //Exit Code
-                    outputString("Goodbye.");
+                    System.out.println("Goodbye.");
 
                     run = false; //(used in the do-while loop)
                 } else {
-                    outputString("Input is an invalid menu ID, please try again: \n");
+                    System.out.println("Input is an invalid menu ID, please try again: \n");
                     //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
                 }
             } while (run);
         } catch (InputMismatchException error) {
             //Catch error of type InputMismatchException and name it 'error'
-            outputString("Incorrect input type, please restart.\nError: " + error);
+            System.out.println("Incorrect input type, please restart.\nError: " + error);
         }
         //Close the scanner (important to only do this once)
         sc.close();
@@ -135,27 +135,22 @@ public class MenuProgram {
         return a;
     }
 
-    /*
-    Method: outputString
-    Import: x (string)
-    Export: void
-    */
-    public static void outputString(String x) {
-        System.out.println(x);
-    }
-
     public static int outputMenu(Scanner sc, String[] menu) {
         int a = 0;
-        outputString("Please select a option from below:\n");
+        System.out.println("Please select a option from below:\n");
         for (int i = 0; i < menu.length; i++) {
-            outputString(i +1 + " >  " + menu[i]);
+            System.out.println(i +1 + " >  " + menu[i]);
         }
         do {
-            outputString("\nEnter selection: ");
+            System.out.print("\nEnter selection: ");
             a = inputInt(sc);
         } while (a < 0 && menu.length < a);
         //While the input is outwith the menu array's length
         return a;
+    }
+
+    public static void name() {
+        
     }
 
     /*
@@ -164,6 +159,7 @@ public class MenuProgram {
     Export: void
     Note: DOES NOT HANDLE ERRORS
     */
+    /*
     public static void dataEntryLoop(Scanner sc, String output, int[] array) {
         outputString(output);
         int a;
@@ -188,7 +184,7 @@ public class MenuProgram {
         } 
         outputString("__________________________________________________________");
         //Output a line to visually separate data entry loops
-    }
+    }*/
 
     /*
     Method: averageOfArray

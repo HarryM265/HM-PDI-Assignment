@@ -149,10 +149,6 @@ public class MenuProgram {
         return a;
     }
 
-    public static void name() {
-        
-    }
-
     /*
     Method: dataEntryLoop
     Import: sc (scanner), output (string), array (1D integer array)

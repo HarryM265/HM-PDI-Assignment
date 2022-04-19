@@ -150,39 +150,6 @@ public class MenuProgram {
     }
 
     /*
-    Method: dataEntryLoop
-    Import: sc (scanner), output (string), array (1D integer array)
-    Export: void
-    Note: DOES NOT HANDLE ERRORS
-    */
-    /*
-    public static void dataEntryLoop(Scanner sc, String output, int[] array) {
-        outputString(output);
-        int a;
-        for (int e = 0; e < array.length; e++) {
-        //Loop through all elements in an array
-            outputString("Episode " + (e + 1) + ": ");
-            //Output a readable request for view numbers for the current episode
-                a = inputInt(sc);
-                if (a >= 0 && a < 100000) {
-                //0 =< a < 100 000
-                    a = 1;
-                } else if (a >= 100000) {
-                //If a >= 100 000
-                    //DO NOTHING
-                } else {
-                //If above conditions are not met
-                    outputString("This system does not allow input values of less than 0, please try again: ");
-                    //Output a re-try request, including reason
-                    a = inputInt(sc);
-                }
-            array[e] = a;
-        } 
-        outputString("__________________________________________________________");
-        //Output a line to visually separate data entry loops
-    }*/
-
-    /*
     Method: averageOfArray
     Import: array (1D integer array)
     Export: b (double)

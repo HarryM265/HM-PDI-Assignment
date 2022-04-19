@@ -48,43 +48,49 @@ public class MenuProgram {
         System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + testCovidRecordArray.length + " records have been loaded.\n");
 
         String[] menu1 = new String[10];
-        menu1[0] = "All countries";
-        menu1[1] = "Countries in South America";
-        menu1[2] = "Countries in North America";
-        menu1[3] = "Countries in Oceania";
-        menu1[4] = "Countries in Asia";
-        menu1[5] = "Countries in Africa";
-        menu1[6] = "Counties in Europe";
-        menu1[7] = "Enter a country";
-        menu1[8] = "Enter a date";
-        menu1[9] = "Exit";
+        menu1[0] = "Exit";
+        menu1[1] = "All countries";
+        menu1[2] = "Countries in South America";
+        menu1[3] = "Countries in North America";
+        menu1[4] = "Countries in Oceania";
+        menu1[5] = "Countries in Asia";
+        menu1[6] = "Countries in Africa";
+        menu1[7] = "Counties in Europe";
+        menu1[8] = "Enter a country";
+        menu1[9] = "Enter a date";
 
         String[] menu2 = new String[8];
-        menu2[0] = "Total number of cumulatively positive cases";
-        menu2[1] = "Total number of cumulatively deceased cases";
-        menu2[2] = "Total number of cumulatively recovered cases";
-        menu2[3] = "Average daily number of currently positive cases";
-        menu2[4] = "Number and percentage of cumulatively positive cases recovered";
-        menu2[5] = "Number and percentage of cumulatively positive cases deceased";
-        menu2[6] = "All of the above statistics";
-        menu2[7] = "Exit";
+        menu2[0] = "Exit";
+        menu2[1] = "Total number of cumulatively positive cases";
+        menu2[2] = "Total number of cumulatively deceased cases";
+        menu2[3] = "Total number of cumulatively recovered cases";
+        menu2[4] = "Average daily number of currently positive cases";
+        menu2[5] = "Number and percentage of cumulatively positive cases recovered";
+        menu2[6] = "Number and percentage of cumulatively positive cases deceased";
+        menu2[7] = "All of the above statistics";
 
         boolean run = true;
-        int p;
+        int p, a;
     
         try{
             do {
                 p = outputMenu(sc, menu1); 
-                if(p == 1) {
+                if(p == 0) {
+                    //Exit Code
+                    System.out.println("Goodbye.");
+
+                    run = false; //(used in the do-while loop)
+                } else if(p == 1) {
                     //All Countries
-                    
-                } else if(p == 2) {
+                    a = outputMenu(sc, menu2);
+                    displayStatistic(a, testCovidRecordArray);
+                } else if (p == 2) {
                     //Countries in South America
 
-                } else if (p == 3) {
+                } else if(p == 3) {
                     //Countries in North America
 
-                } else if(p == 4 ) {
+                } else if(p == 4) {
                     //Countries in Oceania
 
                 } else if(p == 5) {
@@ -102,11 +108,6 @@ public class MenuProgram {
                 } else if(p == 9) {
                     //Enter a date
                     
-                } else if(p == 10) {
-                    //Exit Code
-                    System.out.println("Goodbye.");
-
-                    run = false; //(used in the do-while loop)
                 } else {
                     System.out.println("Input is an invalid menu ID, please try again: \n");
                     //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
@@ -146,7 +147,7 @@ public class MenuProgram {
         int a = 0;
         System.out.println("Please select a option from below:\n");
         for (int i = 0; i < menu.length; i++) {
-            System.out.println(i +1 + " >  " + menu[i]);
+            System.out.println(i + " >  " + menu[i]);
         }
         do {
             System.out.print("\nEnter selection: ");
@@ -154,6 +155,14 @@ public class MenuProgram {
         } while (a < 0 && menu.length < a);
         //While the input is outwith the menu array's length
         return a;
+    }
+
+    public static void displayStatistic(int p, CovidRecord[] testCovidRecordArray) {
+        if (p == 1) {
+                        
+        } else {
+            
+        }
     }
 
     /*

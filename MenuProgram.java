@@ -3,8 +3,7 @@ Title: MenuProgram
 Author: Harrison D. Miles
 Created: 18/04/2022
 Modified: 19/04/2022
-Description: Program that takes user input of viewing values of Netflix TV shows,
- and performs algorhythms to determine certain outputs via a readable menu.
+Description: 
 */
 
 //import java.io.File;
@@ -12,26 +11,27 @@ Description: Program that takes user input of viewing values of Netflix TV shows
 import java.util.*;
 
 public class MenuProgram {
-//(Netflix program analyser)
+//(Joint Research Centre Covid-19 Menu Program)
 
     public static void main(String[] args) /*throws FileNotFoundException*/ {
-        //TODO find NoSuchElementException
-    /*
-    Scanner csvScanner = new Scanner(new File("C:\\Users\\Ducky\\OneDrive\\Documents\\Repositories\\PDI Assignment\\jrc-covid-19-all-days-of-world_ASSIGNMENT.csv"));
-    //parsing a CSV file into the constructor of Scanner class 
-    csvScanner.useDelimiter(",");
-    //setting comma as delimiter pattern
-    int c = 0;
-    while (csvScanner.hasNext()) {
-        if (csvScanner.next() != "") {
-            System.out.println(csvScanner.next());
-            c = c+1;
+        //TODO find NoSuchElementException / finish .csv info import
+        /*
+        Scanner csvScanner = new Scanner(new File("C:\\Users\\Ducky\\OneDrive\\Documents\\Repositories\\PDI Assignment\\jrc-covid-19-all-days-of-world_ASSIGNMENT.csv"));
+        //parsing a CSV file into the constructor of Scanner class 
+        csvScanner.useDelimiter(",");
+        //setting comma as delimiter pattern
+        int c = 0;
+        while (csvScanner.hasNext()) {
+            if (csvScanner.next() != "") {
+                System.out.println(csvScanner.next());
+                c = c+1;
+            }
         }
-    }
-    System.out.println(c);
-    csvScanner.close();
-    //closes the scanner  
-    */
+        System.out.println(c);
+        csvScanner.close();
+        //closes the scanner  
+        */
+
         Scanner sc = new Scanner(System.in);
         /*Instantiate the Scanner system.in under the name 'sc'
         A scanner system.in function is how the program accepts user input*/
@@ -41,10 +41,10 @@ public class MenuProgram {
         for (int i = 0; i < testCovidRecordArray.length; i++) {
             testCovidRecordArray[i] = new CovidRecord();
         }
-        for (int i = 0; i < testCovidRecordArray.length; i++) {
-            System.out.println(testCovidRecordArray[i].toString() + "\n");
-        }
-        //Calc number of entries (records) and set to int XYZ
+        //for (int i = 0; i < testCovidRecordArray.length; i++) {System.out.println(testCovidRecordArray[i].toString() + "\n");} 
+        //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
+
+        //TODO testCovidRecordArray.length to be changed to real covid record array
         System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + testCovidRecordArray.length + " records have been loaded.\n");
 
         String[] menu1 = new String[10];
@@ -70,19 +70,23 @@ public class MenuProgram {
         menu2[7] = "All of the above statistics";
 
         boolean run = true;
-        int p, a;
+        int p;
     
         try{
             do {
                 p = outputMenu(sc, menu1); 
+                //TODO finish filter menu
                 if(p == 0) {
                     //Exit Code
-                    System.out.println("Goodbye.");
 
+                    System.out.println("Goodbye.");
                     run = false; //(used in the do-while loop)
+
                 } else if(p == 1) {
                     //All Countries
+
                     displayStatistic(sc, menu2, testCovidRecordArray, menu1, p);
+
                 } else if (p == 2) {
                     //Countries in South America
 
@@ -132,16 +136,10 @@ public class MenuProgram {
     }
 
     /*
-    Method: inputDouble
-    Import: sc (scanner)
-    Export: a (double)
+    Method: outputMenu
+    Import: sc (scanner), menu (String array)
+    Export: a (integer)
     */
-    public static double inputDouble(Scanner sc) {
-        double a;
-        a = sc.nextDouble();
-        return a;
-    }
-
     public static int outputMenu(Scanner sc, String[] menu) {
         int a = 0;
         System.out.println("Please select a option from below:\n");
@@ -156,12 +154,17 @@ public class MenuProgram {
         return a;
     }
 
+    /*
+    Method: displayStatistic
+    Import: sc (scanner), statMenuArray (String array), covidRecordArray (CovidRecord Array), mainMenu (String Array), mainMenuChoice (Integer)
+    Export: void
+    */
     public static void displayStatistic(Scanner sc, String[] statMenuArray, CovidRecord[] covidRecordArray, String[] mainMenu, int mainMenuChoice) {
         int p;
         boolean run = true;
         do {
             p = outputMenu(sc, statMenuArray);
-
+            //TODO finish displayStatistic method
             if (p == 0) {
                 //Exit Code
                 run = false;
@@ -214,28 +217,6 @@ public class MenuProgram {
         b = (double)(a / (array.length));
         //set 'b' to mean of array and cast to a double
         return b;
-    }
-
-    /*
-    Method: identifyMaxValueOfArray
-    Import: array (1D integer array)
-    Export: b (integer)
-    Note: DOES NOT ACCOUNT FOR EQUAL VALUES (Explained above in 'main')
-    */
-    public static int identifyMaxValueOfArray(int[] array) {
-        int a = 0, b = 0;
-        for (int i = 0; i < array.length; i++) {
-        //Loop through all elements of the array
-            if (array[i] > a) {
-            //If the current element is greater than 'a'
-                a = array[i];
-                //Set 'a' to current element
-                b = i;
-                //Set 'b' to the identifier
-            }
-        }
-        return b;
-        //Return the identifier
     }
 
     /*

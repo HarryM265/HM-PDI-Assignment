@@ -1,96 +1,108 @@
 /*  
-Title: TaskTwo
+Title: MenuProgram
 Author: Harrison D. Miles
-Created: 05/04/2022
-Modified: 06/04/2022
+Created: 18/04/2022
+Modified: 19/04/2022
 Description: Program that takes user input of viewing values of Netflix TV shows,
  and performs algorhythms to determine certain outputs via a readable menu.
 */
 
+//import java.io.File;
+//import java.io.FileNotFoundException;
 import java.util.*;
 
 public class MenuProgram {
 //(Netflix program analyser)
 
-    public static void main(String[] args) {
+    public static void main(String[] args) /*throws FileNotFoundException*/ {
+        //TODO find NoSuchElementException
+    /*
+    Scanner csvScanner = new Scanner(new File("C:\\Users\\Ducky\\OneDrive\\Documents\\Repositories\\PDI Assignment\\jrc-covid-19-all-days-of-world_ASSIGNMENT.csv"));
+    //parsing a CSV file into the constructor of Scanner class 
+    csvScanner.useDelimiter(",");
+    //setting comma as delimiter pattern
+    int c = 0;
+    while (csvScanner.hasNext()) {
+        if (csvScanner.next() != "") {
+            System.out.println(csvScanner.next());
+            c = c+1;
+        }
+    }
+    System.out.println(c);
+    csvScanner.close();
+    //closes the scanner  
+    */
         Scanner sc = new Scanner(System.in);
         /*Instantiate the Scanner system.in under the name 'sc'
         A scanner system.in function is how the program accepts user input*/
 
-        String[] serNames = {"Drive to survive, season 4","Inventing Anna","Bridgerton, season 2"};
-        //Names of all included series in this task
-        int[] dtsS4 = new int[10];//dtsS4 = Drive to Survive, Season 4
-        int[] invAnn = new int[9];//invAnn = Inventing Anna
-        int[] bridS2 = new int[8];//bridS2 = Bridgerton, season 2
+        //TODO data entry
+        //Calc number of entries (records) and set to int XYZ
+        outputString("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of 'XYZ' records have been loaded.\n");
 
-        outputString("Welcome to the Netflix episode analyser, please input current viewer count data: ");
+        String[] menu1 = new String[10];
+        menu1[0] = "All countries";
+        menu1[1] = "Countries in South America";
+        menu1[2] = "Countries in North America";
+        menu1[3] = "Countries in Oceania";
+        menu1[4] = "Countries in Asia";
+        menu1[5] = "Countries in Africa";
+        menu1[6] = "Counties in Europe";
+        menu1[7] = "Enter a country";
+        menu1[8] = "Enter a date";
+        menu1[9] = "Exit";
 
-        dataEntryLoop(sc, "Please enter the view count per episode for " + serNames[0] + ": ", dtsS4);
-        dataEntryLoop(sc, "Please enter the view count per episode for " + serNames[1] + ": ", invAnn);
-        dataEntryLoop(sc, "Please enter the view count per episode for " + serNames[2] + ": ", bridS2);
-        outputString("Data entry completed.");
+        String[] menu2 = new String[8];
+        menu2[0] = "Total number of cumulatively positive cases";
+        menu2[1] = "Total number of cumulatively deceased cases";
+        menu2[2] = "Total number of cumulatively recovered cases";
+        menu2[3] = "Average daily number of currently positive cases";
+        menu2[4] = "Number and percentage of cumulatively positive cases recovered";
+        menu2[5] = "Number and percentage of cumulatively positive cases deceased";
+        menu2[6] = "All of the above statistics";
+        menu2[7] = "Exit";
 
-        int p, a, b, c, d;
-        double x, y, z;
-        String menu = "> 1. Display average view count for each series season.\n> 2. Display episode from all series with the highest view count.\n> 3. Display the most popular series.\n> 4. Display show with largest season finale audience with view count.\n> 5. Exit the program.";
         boolean run = true;
+        int p;
     
         try{
             do {
-                outputString(menu + "\nYour choice: ");
-                p = inputInt(sc);
-
+                p = outputMenu(sc, menu1); 
                 if(p == 1) {
-                    //Display average view count for each series.
-                    x = averageOfArray(dtsS4);
-                    y = averageOfArray(invAnn);
-                    z = averageOfArray(bridS2);
-
-                    outputString("Drive to survive, season 4: " + x);
-                    outputString("Inventing Anna: " + y);
-                    outputString("Bridgerton, season 2: " + z);
-                    //(scientific notation not intended)
+                    //All Countries
 
                 } else if(p == 2) {
-                    //Display episode from series with the highest view count
-                    a = identifyMaxValueOfArray(dtsS4);
-                    b = identifyMaxValueOfArray(invAnn);
-                    c = identifyMaxValueOfArray(bridS2);
-                    //Method does not account for equal variables, as in the actual scenario it is highly unlikely that two episodes of the same series will have an exactly equal viewer count
-
-                    outputString("Drive to survive, season 4's most viewed episode is " + (a + 1) + " with " + dtsS4[a] + " views.");
-                    outputString("Inventing Anna's most viewed episode is " + (b + 1) + " with " + invAnn[b] + " views.");
-                    outputString("Bridgerton, season 2's most viewed episode is " + (c + 1) + " with " + bridS2[c] + " views.");
+                    //Countries in South America
 
                 } else if (p == 3) {
-                    //Display the most popular series
-                    int[] totals = new int[3];
-                    totals[0] = calcTotal(dtsS4);
-                    totals[1] = calcTotal(invAnn);
-                    totals[2] = calcTotal(bridS2);
-                    //Create a new array titled totals of lenth 3, and set each value to the total views of all episodes in a series, using the calcTotal method
+                    //Countries in North America
 
-                    d = identifyMaxValueOfArray(totals);
-                    outputString(serNames[d] + " has the highest popularity with " + totals[d] + " views.");
                 } else if(p == 4 ) {
-                    //Display show with the largest finale viewing
-                    int[] finaleViews = new int[3];
-                    finaleViews[0] = dtsS4[dtsS4.length - 1];
-                    finaleViews[1] = invAnn[invAnn.length - 1];
-                    finaleViews[2] = bridS2[bridS2.length - 1];
-                    //Create a new array titled finaleViews of length 3, and set each value to the last value of each view-count array
+                    //Countries in Oceania
 
-                    a = identifyMaxValueOfArray(finaleViews);
-
-                    outputString(serNames[a] + " has the most popular finale episode with: " + finaleViews[a] + " views.");
                 } else if(p == 5) {
+                    //Countries in Asia
+
+                } else if(p == 6) {
+                    //Countries in Africa
+                    
+                } else if(p == 7) {
+                    //Countries in Europe
+                    
+                } else if(p == 8) {
+                    //Enter a country
+                    
+                } else if(p == 9) {
+                    //Enter a date
+                    
+                } else if(p == 10) {
                     //Exit Code
                     outputString("Goodbye.");
 
                     run = false; //(used in the do-while loop)
                 } else {
-                    outputString("Input is an invalid menu ID, please try again: ");
-                    //If the user inputs any integer that is not 1-5 (inclusive) ask the user to re-try, with reason
+                    outputString("Input is an invalid menu ID, please try again: \n");
+                    //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
                 }
             } while (run);
         } catch (InputMismatchException error) {
@@ -130,6 +142,20 @@ public class MenuProgram {
     */
     public static void outputString(String x) {
         System.out.println(x);
+    }
+
+    public static int outputMenu(Scanner sc, String[] menu) {
+        int a = 0;
+        outputString("Please select a option from below:\n");
+        for (int i = 0; i < menu.length; i++) {
+            outputString(i +1 + " >  " + menu[i]);
+        }
+        do {
+            outputString("\nEnter selection: ");
+            a = inputInt(sc);
+        } while (a < 0 && menu.length < a);
+        //While the input is outwith the menu array's length
+        return a;
     }
 
     /*

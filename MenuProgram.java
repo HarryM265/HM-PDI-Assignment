@@ -90,54 +90,54 @@ public class MenuProgram {
                 } else if (p == 2) {
                     //Countries in South America
 
-                    a = searchCovRecObj(covidRecordArray, "SA"); //Set 'a' to the number of Covid Records in SA
+                    a = searchCovRecObjContinent(covidRecordArray, "SA"); //Set 'a' to the number of Covid Records in SA
                     CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObj(a, covidRecordArray, "SA"); //Set the vaules of the 'filterArray' to all Covid Records in SA
+                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "SA"); //Set the vaules of the 'filterArray' to all Covid Records in SA
 
                     displayStatistic(sc, menu2, filterArray, menu1, p);
 
                 } else if(p == 3) {
                     //Countries in North America
 
-                    a = searchCovRecObj(covidRecordArray, "NA"); //Set 'a' to the number of Covid Records in NA
+                    a = searchCovRecObjContinent(covidRecordArray, "NA"); //Set 'a' to the number of Covid Records in NA
                     CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObj(a, covidRecordArray, "NA"); //Set the vaules of the 'filterArray' to all Covid Records in NA
+                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "NA"); //Set the vaules of the 'filterArray' to all Covid Records in NA
 
                     displayStatistic(sc, menu2, filterArray, menu1, p);
 
                 } else if(p == 4) {
                     //Countries in Oceania
 
-                    a = searchCovRecObj(covidRecordArray, "OC"); //Set 'a' to the number of Covid Records in OC
+                    a = searchCovRecObjContinent(covidRecordArray, "OC"); //Set 'a' to the number of Covid Records in OC
                     CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObj(a, covidRecordArray, "OC"); //Set the vaules of the 'filterArray' to all Covid Records in OC
+                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "OC"); //Set the vaules of the 'filterArray' to all Covid Records in OC
 
                     displayStatistic(sc, menu2, filterArray, menu1, p);
 
                 } else if(p == 5) {
                     //Countries in Asia
 
-                    a = searchCovRecObj(covidRecordArray, "AS"); //Set 'a' to the number of Covid Records in AS
+                    a = searchCovRecObjContinent(covidRecordArray, "AS"); //Set 'a' to the number of Covid Records in AS
                     CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObj(a, covidRecordArray, "AS"); //Set the vaules of the 'filterArray' to all Covid Records in AS
+                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "AS"); //Set the vaules of the 'filterArray' to all Covid Records in AS
 
                     displayStatistic(sc, menu2, filterArray, menu1, p);
 
                 } else if(p == 6) {
                     //Countries in Africa
                     
-                    a = searchCovRecObj(covidRecordArray, "AF"); //Set 'a' to the number of Covid Records in AF
+                    a = searchCovRecObjContinent(covidRecordArray, "AF"); //Set 'a' to the number of Covid Records in AF
                     CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObj(a, covidRecordArray, "AF"); //Set the vaules of the 'filterArray' to all Covid Records in AF
+                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "AF"); //Set the vaules of the 'filterArray' to all Covid Records in AF
 
                     displayStatistic(sc, menu2, filterArray, menu1, p);
 
                 } else if(p == 7) {
                     //Countries in Europe
                     
-                    a = searchCovRecObj(covidRecordArray, "EU"); //Set 'a' to the number of Covid Records in EU
+                    a = searchCovRecObjContinent(covidRecordArray, "EU"); //Set 'a' to the number of Covid Records in EU
                     CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObj(a, covidRecordArray, "EU"); //Set the vaules of the 'filterArray' to all Covid Records in EU
+                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "EU"); //Set the vaules of the 'filterArray' to all Covid Records in EU
 
                     displayStatistic(sc, menu2, filterArray, menu1, p);
 
@@ -211,7 +211,7 @@ public class MenuProgram {
                 //Total cumulative rec
                 int[] cumRecArray;
                 int a;
-                
+
                 cumRecArray = distObjToArray(covidRecordArray, 2);
                 a = calcTotal(cumRecArray);
 
@@ -255,7 +255,7 @@ public class MenuProgram {
         return outputArray;
     }
 
-    public static int searchCovRecObj(CovidRecord[] pCovRecArr, String pFilter) {
+    public static int searchCovRecObjContinent(CovidRecord[] pCovRecArr, String pFilter) {
         int a = 0;
         for (int i = 0; i < pCovRecArr.length; i++) {
             if (pCovRecArr[i].getContinent() == pFilter) {
@@ -265,11 +265,55 @@ public class MenuProgram {
         return a;
     }
 
-    public static CovidRecord[] setCovRecFilObj(int a, CovidRecord[] pCovRecArr, String pFilter) {
+    public static CovidRecord[] setCovRecFilObjContinent(int a, CovidRecord[] pCovRecArr, String pFilter) {
         CovidRecord[] filterArray = new CovidRecord[a];
         a = 0;
         for (int i = 0; i < pCovRecArr.length; i++) {
             if (pCovRecArr[i].getContinent() == pFilter) {
+                filterArray[a] = pCovRecArr[i];
+                a = a + 1;
+            }
+        }
+        return filterArray;
+    }
+
+    public static int searchCovRecObjCountry(CovidRecord[] pCovRecArr, String pFilter) {
+        int a = 0;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            if (pCovRecArr[i].getCountryName() == pFilter) {
+                a = a + 1;
+            }
+        }
+        return a;
+    }
+
+    public static CovidRecord[] setCovRecFilObjDate(int a, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[a];
+        a = 0;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            if (pCovRecArr[i].getDate() == pFilter) {
+                filterArray[a] = pCovRecArr[i];
+                a = a + 1;
+            }
+        }
+        return filterArray;
+    }
+
+    public static int searchCovRecObjDate(CovidRecord[] pCovRecArr, String pFilter) {
+        int a = 0;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            if (pCovRecArr[i].getDate() == pFilter) {
+                a = a + 1;
+            }
+        }
+        return a;
+    }
+
+    public static CovidRecord[] setCovRecFilObjCountry(int a, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[a];
+        a = 0;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            if (pCovRecArr[i].getCountryName() == pFilter) {
                 filterArray[a] = pCovRecArr[i];
                 a = a + 1;
             }

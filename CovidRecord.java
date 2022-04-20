@@ -4,6 +4,7 @@ Date: 18 Apr 2022
 Purpose: A record to store covid details
 */
 public class CovidRecord extends Country{
+    private String date;
     private int cumulativePos;
     private int cumulativeDec;
     private int cumulativeRec;
@@ -11,7 +12,7 @@ public class CovidRecord extends Country{
     private int intensiveCare;
     
     //Parameters constructor
-    CovidRecord(String pIso3, String pContinent, String pCountryName, String pNuts, double pLat, double pLon, int pCumulativePos, int pCumulativeDec, int pCumulativeRec, int pHospitalised, int pIntensiveCare) {
+    CovidRecord(String pIso3, String pContinent, String pCountryName, String pNuts, double pLat, double pLon, String date, int pCumulativePos, int pCumulativeDec, int pCumulativeRec, int pHospitalised, int pIntensiveCare) {
         super(pIso3, pContinent, pCountryName, pNuts, pLat, pLon);
         cumulativePos   = pCumulativePos;
         cumulativeDec   = pCumulativeDec;
@@ -23,6 +24,7 @@ public class CovidRecord extends Country{
     //Copy constructor
     CovidRecord(CovidRecord pCovidRecord) {
         super(pCovidRecord);
+        date            = pCovidRecord.getDate();
         cumulativePos   = pCovidRecord.getCumulativePos();
         cumulativeDec   = pCovidRecord.getCumulativeDec();
         cumulativeRec   = pCovidRecord.getCumulativeRec();
@@ -33,6 +35,7 @@ public class CovidRecord extends Country{
     //Default constructor
     CovidRecord() {
         super();
+        date = "25/12/0000";
         cumulativePos = 2134;
         cumulativeDec = 2134;
         cumulativeRec = 2134;
@@ -41,6 +44,9 @@ public class CovidRecord extends Country{
     }
 
     //Accessor methods
+    public String getDate() {
+        return date;
+    }
     public int getCumulativePos() {
         return cumulativePos;
     }
@@ -58,6 +64,9 @@ public class CovidRecord extends Country{
     }
 
     //Mutator methods
+    public void setDate(String pDate) {
+        date = pDate;
+    }
     public void setCumulativePos(int pCumulativePos) {
         cumulativePos = pCumulativePos;
     }

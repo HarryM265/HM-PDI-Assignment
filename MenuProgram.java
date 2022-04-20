@@ -191,19 +191,31 @@ public class MenuProgram {
                 System.out.println("Going Back...");
             } else if (p == 1) {
                 //Total cumulative pos
+                int[] cumPosArray;
                 int a;
-                int[] cumPosArray = new int[covidRecordArray.length];
-                for (int i = 0; i < cumPosArray.length; i++) {
-                    cumPosArray[i] = covidRecordArray[i].getCumulativePos();
-                }
+
+                cumPosArray = distObjToArray(covidRecordArray, 0);
                 a = calcTotal(cumPosArray);
+
                 System.out.println("Cumulative number of positive cases in " + mainMenu[mainMenuChoice] + ": " + a);
             } else if (p == 2) {
                 //Total cumulative dec
+                int[] cumDecArray;
+                int a;
+                
+                cumDecArray = distObjToArray(covidRecordArray, 1);
+                a = calcTotal(cumDecArray);
 
+                System.out.println("Cumulative number of deceased people (as a result of COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a);
             } else if (p == 3) {
                 //Total cumulative rec
+                int[] cumRecArray;
+                int a;
+                
+                cumRecArray = distObjToArray(covidRecordArray, 2);
+                a = calcTotal(cumRecArray);
 
+                System.out.println("Cumulative number of recovered people (from COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a);
             } else if (p == 4) {
                 //Avg daily number of positive cases
 
@@ -222,6 +234,25 @@ public class MenuProgram {
             }
         } while (run);
         
+    }
+
+    public static int[] distObjToArray(CovidRecord[] pCovRecArray, int pDistPref) { //Distinguish Object To Array
+        int[] outputArray = new int[pCovRecArray.length];
+
+        if (pDistPref == 0) { //Cumulative Positive
+            for (int i = 0; i < outputArray.length; i++) {
+                outputArray[i] = pCovRecArray[i].getCumulativePos();
+            }
+        } else if (pDistPref == 1) { //Cumulative Deceased
+            for (int i = 0; i < outputArray.length; i++) {
+                outputArray[i] = pCovRecArray[i].getCumulativeDec();
+            }
+        } else if (pDistPref == 2) { //Cumulative Recovered
+            for (int i = 0; i < outputArray.length; i++) {
+                outputArray[i] = pCovRecArray[i].getCumulativeRec();
+            }
+        }
+        return outputArray;
     }
 
     public static int searchCovRecObj(CovidRecord[] pCovRecArr, String pFilter) {

@@ -35,17 +35,17 @@ public class MenuProgram {
         Scanner sc = new Scanner(System.in);
         /*Instantiate the Scanner system.in under the name 'sc'
         A scanner system.in function is how the program accepts user input*/
-
+        
         //TODO data entry
-        CovidRecord[] testCovidRecordArray = new CovidRecord[1784];
-        for (int i = 0; i < testCovidRecordArray.length; i++) {
-            testCovidRecordArray[i] = new CovidRecord();
+        int csvLength = 1784;
+        CovidRecord[] covidRecordArray = new CovidRecord[csvLength];
+        for (int i = 0; i < covidRecordArray.length; i++) {
+            covidRecordArray[i] = new CovidRecord();
         }
-        //for (int i = 0; i < testCovidRecordArray.length; i++) {System.out.println(testCovidRecordArray[i].toString() + "\n");} 
+        //for (int i = 0; i < covidRecordArray.length; i++) {System.out.println(covidRecordArray[i].toString() + "\n");} 
         //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
 
-        //TODO testCovidRecordArray.length to be changed to real covid record array
-        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + testCovidRecordArray.length + " records have been loaded.\n");
+        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + covidRecordArray.length + " records have been loaded.\n");
 
         String[] menu1 = new String[10];
         menu1[0] = "Exit";
@@ -70,7 +70,7 @@ public class MenuProgram {
         menu2[7] = "All of the above statistics";
 
         boolean run = true;
-        int p;
+        int p, a;
     
         try{
             do {
@@ -85,26 +85,62 @@ public class MenuProgram {
                 } else if(p == 1) {
                     //All Countries
 
-                    displayStatistic(sc, menu2, testCovidRecordArray, menu1, p);
+                    displayStatistic(sc, menu2, covidRecordArray, menu1, p);
 
                 } else if (p == 2) {
                     //Countries in South America
 
+                    a = searchCovRecObj(covidRecordArray, "SA"); //Set 'a' to the number of Covid Records in SA
+                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                    filterArray = setCovRecFilObj(a, covidRecordArray, "SA"); //Set the vaules of the 'filterArray' to all Covid Records in SA
+
+                    displayStatistic(sc, menu2, filterArray, menu1, p);
+
                 } else if(p == 3) {
                     //Countries in North America
+
+                    a = searchCovRecObj(covidRecordArray, "NA"); //Set 'a' to the number of Covid Records in NA
+                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                    filterArray = setCovRecFilObj(a, covidRecordArray, "NA"); //Set the vaules of the 'filterArray' to all Covid Records in NA
+
+                    displayStatistic(sc, menu2, filterArray, menu1, p);
 
                 } else if(p == 4) {
                     //Countries in Oceania
 
+                    a = searchCovRecObj(covidRecordArray, "OC"); //Set 'a' to the number of Covid Records in OC
+                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                    filterArray = setCovRecFilObj(a, covidRecordArray, "OC"); //Set the vaules of the 'filterArray' to all Covid Records in OC
+
+                    displayStatistic(sc, menu2, filterArray, menu1, p);
+
                 } else if(p == 5) {
                     //Countries in Asia
+
+                    a = searchCovRecObj(covidRecordArray, "AS"); //Set 'a' to the number of Covid Records in AS
+                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                    filterArray = setCovRecFilObj(a, covidRecordArray, "AS"); //Set the vaules of the 'filterArray' to all Covid Records in AS
+
+                    displayStatistic(sc, menu2, filterArray, menu1, p);
 
                 } else if(p == 6) {
                     //Countries in Africa
                     
+                    a = searchCovRecObj(covidRecordArray, "AF"); //Set 'a' to the number of Covid Records in AF
+                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                    filterArray = setCovRecFilObj(a, covidRecordArray, "AF"); //Set the vaules of the 'filterArray' to all Covid Records in AF
+
+                    displayStatistic(sc, menu2, filterArray, menu1, p);
+
                 } else if(p == 7) {
                     //Countries in Europe
                     
+                    a = searchCovRecObj(covidRecordArray, "EU"); //Set 'a' to the number of Covid Records in EU
+                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                    filterArray = setCovRecFilObj(a, covidRecordArray, "EU"); //Set the vaules of the 'filterArray' to all Covid Records in EU
+
+                    displayStatistic(sc, menu2, filterArray, menu1, p);
+
                 } else if(p == 8) {
                     //Enter a country
                     
@@ -124,22 +160,6 @@ public class MenuProgram {
         sc.close();
     }
 
-    /*
-    Method: inputInt
-    Import: sc (scanner)
-    Export: a (integer)
-    */
-    public static int inputInt(Scanner sc) {
-        int a;
-        a = sc.nextInt();
-        return a;
-    }
-
-    /*
-    Method: outputMenu
-    Import: sc (scanner), menu (String array)
-    Export: a (integer)
-    */
     public static int outputMenu(Scanner sc, String[] menu) {
         int a = 0;
         System.out.println("Please select a option from below:\n");
@@ -172,7 +192,7 @@ public class MenuProgram {
             } else if (p == 1) {
                 //Total cumulative pos
                 int a;
-                int[] cumPosArray = new int[1784];
+                int[] cumPosArray = new int[covidRecordArray.length];
                 for (int i = 0; i < cumPosArray.length; i++) {
                     cumPosArray[i] = covidRecordArray[i].getCumulativePos();
                 }
@@ -204,6 +224,28 @@ public class MenuProgram {
         
     }
 
+    public static int searchCovRecObj(CovidRecord[] pCovRecArr, String pFilter) {
+        int a = 0;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            if (pCovRecArr[i].getContinent() == pFilter) {
+                a = a + 1;
+            }
+        }
+        return a;
+    }
+
+    public static CovidRecord[] setCovRecFilObj(int a, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[a];
+        a = 0;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            if (pCovRecArr[i].getContinent() == pFilter) {
+                filterArray[a] = pCovRecArr[i];
+                a = a + 1;
+            }
+        }
+        return filterArray;
+    }
+
     /*
     Method: averageOfArray
     Import: array (1D integer array)
@@ -233,4 +275,21 @@ public class MenuProgram {
         }
         return a;
     }
+
+    /*
+    Method: inputInt
+    Import: sc (scanner)
+    Export: a (integer)
+    */
+    public static int inputInt(Scanner sc) {
+        int a;
+        a = sc.nextInt();
+        return a;
+    }
+
+    /*
+    Method: outputMenu
+    Import: sc (scanner), menu (String array)
+    Export: a (integer)
+    */
 }

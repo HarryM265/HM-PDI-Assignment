@@ -210,7 +210,7 @@ public class MenuProgram {
                 cumDecArray = distObjToArray(covidRecordArray, 1);
                 a = calcTotal(cumDecArray);
 
-                System.out.println("Cumulative number of deceased people (as a result of COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a);
+                System.out.println("Cumulative number of deceased people (as a result of COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a + ".");
             } else if (p == 3) {
                 //Total cumulative rec
                 int[] cumRecArray;
@@ -219,15 +219,45 @@ public class MenuProgram {
                 cumRecArray = distObjToArray(covidRecordArray, 2);
                 a = calcTotal(cumRecArray);
 
-                System.out.println("Cumulative number of recovered people (from COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a);
+                System.out.println("Cumulative number of recovered people (from COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a + ".");
             } else if (p == 4) {
                 //Avg daily number of positive cases
-
+                //TODO find out wtf this is
             } else if (p == 5) {
-                //Num and % of cumulative pos
+                //Num and % of cumulative pos cases rec
+                int[] cumPosArray;
+                int[] cumRecArray;
+                int a, b;
+                double c;
+
+                cumPosArray = distObjToArray(covidRecordArray, 0);
+                a = calcTotal(cumPosArray);
+
+                cumRecArray = distObjToArray(covidRecordArray, 2);
+                b = calcTotal(cumRecArray);
+
+                c = (double)((b/a) * 100);
+                c = Math.round(c);
+
+                System.out.println(c + "% (" + b + "/" + a + ") cases recovered in " + mainMenu[mainMenuChoice] + ".");
 
             } else if (p == 6) {
-                //Num and % of cumulative dec
+                //Num and % of cumulative pos cases dec
+                int[] cumPosArray;
+                int[] cumDecArray;
+                int a, b;
+                double c;
+
+                cumPosArray = distObjToArray(covidRecordArray, 0);
+                a = calcTotal(cumPosArray);
+
+                cumDecArray = distObjToArray(covidRecordArray, 1);
+                b = calcTotal(cumDecArray);
+
+                c = (double)((b/a) * 100);
+                c = Math.round(c);
+
+                System.out.println(c + "% (" + b + "/" + a + ") cases deceased in " + mainMenu[mainMenuChoice] + ".");
 
             } else if (p == 7) {
                 //All of the above

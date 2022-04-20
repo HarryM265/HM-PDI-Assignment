@@ -4,6 +4,7 @@ Date: 18 Apr 2022
 Purpose: A Country to store country details
 */
 public class Country {
+    //TODO input check
     private String iso3;
     private String continent;
     private String countryName;

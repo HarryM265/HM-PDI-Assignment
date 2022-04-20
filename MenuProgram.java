@@ -15,6 +15,7 @@ public class MenuProgram {
 
     public static void main(String[] args) /*throws FileNotFoundException*/ {
         //TODO find NoSuchElementException / finish .csv info import
+        //TODO data entry
         /*
         Scanner csvScanner = new Scanner(new File("C:\\Users\\Ducky\\OneDrive\\Documents\\Repositories\\PDI Assignment\\jrc-covid-19-all-days-of-world_ASSIGNMENT.csv"));
         //parsing a CSV file into the constructor of Scanner class 
@@ -36,7 +37,6 @@ public class MenuProgram {
         /*Instantiate the Scanner system.in under the name 'sc'
         A scanner system.in function is how the program accepts user input*/
         
-        //TODO data entry
         int csvLength = 1784;
         CovidRecord[] covidRecordArray = new CovidRecord[csvLength];
         for (int i = 0; i < covidRecordArray.length; i++) {
@@ -45,7 +45,7 @@ public class MenuProgram {
         //for (int i = 0; i < covidRecordArray.length; i++) {System.out.println(covidRecordArray[i].toString() + "\n");} 
         //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
 
-        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + covidRecordArray.length + " records have been loaded.\n");
+        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + csvLength + " records have been loaded.\n");
 
         String[] menu1 = new String[10];
         menu1[0] = "Exit";
@@ -69,89 +69,8 @@ public class MenuProgram {
         menu2[6] = "Number and percentage of cumulatively positive cases deceased";
         menu2[7] = "All of the above statistics";
 
-        boolean run = true;
-        int p, a;
-    
         try{
-            do {
-                p = outputMenu(sc, menu1); 
-                //TODO finish filter menu
-                if(p == 0) {
-                    //Exit Code
-
-                    System.out.println("Goodbye.");
-                    run = false; //(used in the do-while loop)
-
-                } else if(p == 1) {
-                    //All Countries
-
-                    displayStatistic(sc, menu2, covidRecordArray, menu1, p);
-
-                } else if (p == 2) {
-                    //Countries in South America
-
-                    a = searchCovRecObjContinent(covidRecordArray, "SA"); //Set 'a' to the number of Covid Records in SA
-                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "SA"); //Set the vaules of the 'filterArray' to all Covid Records in SA
-
-                    displayStatistic(sc, menu2, filterArray, menu1, p);
-
-                } else if(p == 3) {
-                    //Countries in North America
-
-                    a = searchCovRecObjContinent(covidRecordArray, "NA"); //Set 'a' to the number of Covid Records in NA
-                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "NA"); //Set the vaules of the 'filterArray' to all Covid Records in NA
-
-                    displayStatistic(sc, menu2, filterArray, menu1, p);
-
-                } else if(p == 4) {
-                    //Countries in Oceania
-
-                    a = searchCovRecObjContinent(covidRecordArray, "OC"); //Set 'a' to the number of Covid Records in OC
-                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "OC"); //Set the vaules of the 'filterArray' to all Covid Records in OC
-
-                    displayStatistic(sc, menu2, filterArray, menu1, p);
-
-                } else if(p == 5) {
-                    //Countries in Asia
-
-                    a = searchCovRecObjContinent(covidRecordArray, "AS"); //Set 'a' to the number of Covid Records in AS
-                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "AS"); //Set the vaules of the 'filterArray' to all Covid Records in AS
-
-                    displayStatistic(sc, menu2, filterArray, menu1, p);
-
-                } else if(p == 6) {
-                    //Countries in Africa
-                    
-                    a = searchCovRecObjContinent(covidRecordArray, "AF"); //Set 'a' to the number of Covid Records in AF
-                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "AF"); //Set the vaules of the 'filterArray' to all Covid Records in AF
-
-                    displayStatistic(sc, menu2, filterArray, menu1, p);
-
-                } else if(p == 7) {
-                    //Countries in Europe
-                    
-                    a = searchCovRecObjContinent(covidRecordArray, "EU"); //Set 'a' to the number of Covid Records in EU
-                    CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
-                    filterArray = setCovRecFilObjContinent(a, covidRecordArray, "EU"); //Set the vaules of the 'filterArray' to all Covid Records in EU
-
-                    displayStatistic(sc, menu2, filterArray, menu1, p);
-
-                } else if(p == 8) {
-                    //Enter a country
-                    
-                } else if(p == 9) {
-                    //Enter a date
-                    
-                } else {
-                    System.out.println("Input is an invalid menu ID, please try again: \n");
-                    //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
-                }
-            } while (run);
+            displayMainMenu(sc, menu1, menu2, covidRecordArray);
         } catch (InputMismatchException error) {
             //Catch error of type InputMismatchException and name it 'error'
             System.out.println("Incorrect input type, please restart.\nError: " + error);
@@ -172,6 +91,91 @@ public class MenuProgram {
         } while (a < 0 && menu.length < a);
         //While the input is outwith the menu array's length
         return a;
+    }
+
+    public static void displayMainMenu(Scanner sc, String[] menu1, String[] menu2, CovidRecord[] covidRecordArray) {
+        int p, a;
+        boolean run = true;
+
+        do {
+            p = outputMenu(sc, menu1); 
+            //TODO finish filter menu
+            if(p == 0) {
+                //Exit Code
+
+                System.out.println("Goodbye.");
+                run = false; //(used in the do-while loop)
+
+            } else if(p == 1) {
+                //All Countries
+
+                displayStatistic(sc, menu2, covidRecordArray, menu1, p);
+
+            } else if (p == 2) {
+                //Countries in South America
+
+                a = searchCovRecObjContinent(covidRecordArray, "SA"); //Set 'a' to the number of Covid Records in SA
+                CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                filterArray = setCovRecFilObjContinent(a, covidRecordArray, "SA"); //Set the vaules of the 'filterArray' to all Covid Records in SA
+
+                displayStatistic(sc, menu2, filterArray, menu1, p);
+
+            } else if(p == 3) {
+                //Countries in North America
+
+                a = searchCovRecObjContinent(covidRecordArray, "NA"); //Set 'a' to the number of Covid Records in NA
+                CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                filterArray = setCovRecFilObjContinent(a, covidRecordArray, "NA"); //Set the vaules of the 'filterArray' to all Covid Records in NA
+
+                displayStatistic(sc, menu2, filterArray, menu1, p);
+
+            } else if(p == 4) {
+                //Countries in Oceania
+
+                a = searchCovRecObjContinent(covidRecordArray, "OC"); //Set 'a' to the number of Covid Records in OC
+                CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                filterArray = setCovRecFilObjContinent(a, covidRecordArray, "OC"); //Set the vaules of the 'filterArray' to all Covid Records in OC
+
+                displayStatistic(sc, menu2, filterArray, menu1, p);
+
+            } else if(p == 5) {
+                //Countries in Asia
+
+                a = searchCovRecObjContinent(covidRecordArray, "AS"); //Set 'a' to the number of Covid Records in AS
+                CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                filterArray = setCovRecFilObjContinent(a, covidRecordArray, "AS"); //Set the vaules of the 'filterArray' to all Covid Records in AS
+
+                displayStatistic(sc, menu2, filterArray, menu1, p);
+
+            } else if(p == 6) {
+                //Countries in Africa
+                
+                a = searchCovRecObjContinent(covidRecordArray, "AF"); //Set 'a' to the number of Covid Records in AF
+                CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                filterArray = setCovRecFilObjContinent(a, covidRecordArray, "AF"); //Set the vaules of the 'filterArray' to all Covid Records in AF
+
+                displayStatistic(sc, menu2, filterArray, menu1, p);
+
+            } else if(p == 7) {
+                //Countries in Europe
+                
+                a = searchCovRecObjContinent(covidRecordArray, "EU"); //Set 'a' to the number of Covid Records in EU
+                CovidRecord[] filterArray = new CovidRecord[a]; //Make a new 'filterArray' with a length of 'a'
+                filterArray = setCovRecFilObjContinent(a, covidRecordArray, "EU"); //Set the vaules of the 'filterArray' to all Covid Records in EU
+
+                displayStatistic(sc, menu2, filterArray, menu1, p);
+
+            } else if(p == 8) {
+                //Enter a country
+                
+            } else if(p == 9) {
+                //Enter a date
+                
+            } else {
+                System.out.println("Input is an invalid menu ID, please try again: \n");
+                //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
+            }
+        } while (run);
     }
 
     /*

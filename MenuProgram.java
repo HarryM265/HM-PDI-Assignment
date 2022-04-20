@@ -42,7 +42,7 @@ public class MenuProgram {
         for (int i = 0; i < covidRecordArray.length; i++) {
             covidRecordArray[i] = new CovidRecord();
         }
-        //for (int i = 0; i < covidRecordArray.length; i++) {System.out.println(covidRecordArray[i].toString() + "\n");} 
+        for (int i = 0; i < covidRecordArray.length; i++) {System.out.println(covidRecordArray[i].toString() + "\n");} 
         //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
 
         System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + csvLength + " records have been loaded.\n");
@@ -56,8 +56,8 @@ public class MenuProgram {
         menu1[5] = "Countries in Asia";
         menu1[6] = "Countries in Africa";
         menu1[7] = "Counties in Europe";
-        menu1[8] = "Enter a country";
-        menu1[9] = "Enter a date";
+        menu1[8] = "A country";
+        menu1[9] = "A date";
 
         String[] menu2 = new String[8];
         menu2[0] = "Exit";
@@ -79,6 +79,11 @@ public class MenuProgram {
         sc.close();
     }
 
+    /*
+    Method: outputMenu
+    Import: sc (scanner), menu (String array)
+    Export: a (integer)
+    */
     public static int outputMenu(Scanner sc, String[] menu) {
         int a = 0;
         System.out.println("Please select a option from below:\n");
@@ -99,7 +104,6 @@ public class MenuProgram {
 
         do {
             p = outputMenu(sc, menu1); 
-            //TODO finish filter menu
             if(p == 0) {
                 //Exit Code
 
@@ -168,9 +172,43 @@ public class MenuProgram {
             } else if(p == 8) {
                 //Enter a country
                 
+                String input;
+                System.out.print("Please enter the name of the country you would like to analyse: ");
+                input = inputString(sc);
+
+                a = searchCovRecObjCountry(covidRecordArray, input);
+
+                while (a <= 0) {
+                    System.out.print("Your input does not match any country name in the database, try again, remember to use capital letters: ");
+                    input = inputString(sc);
+                    a = searchCovRecObjDate(covidRecordArray, input);
+                }
+
+                CovidRecord[] filterArray = new CovidRecord[a];
+                filterArray = setCovRecFilObjCountry(a, covidRecordArray, input);
+
+                displayStatistic(sc, menu2, filterArray, menu1, p);
+
             } else if(p == 9) {
                 //Enter a date
                 
+                String input;
+                System.out.print("Please enter the date you would like to analyse: ");
+                input = inputString(sc);
+
+                a = searchCovRecObjDate(covidRecordArray, input);
+
+                while (a <= 0) {
+                    System.out.print("Your input does not match any date in the database, try again using this format '12/2/2022': ");
+                    input = inputString(sc);
+                    a = searchCovRecObjDate(covidRecordArray, input);
+                }
+
+                CovidRecord[] filterArray = new CovidRecord[a];
+                filterArray = setCovRecFilObjDate(a, covidRecordArray, input);
+
+                displayStatistic(sc, menu2, filterArray, menu1, p);
+
             } else {
                 System.out.println("Input is an invalid menu ID, please try again: \n");
                 //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
@@ -200,7 +238,7 @@ public class MenuProgram {
 
                 cumPosArray = distObjToArray(covidRecordArray, 0);
                 a = calcTotal(cumPosArray);
-
+                //TODO make more readable output for the user with an if-then
                 System.out.println("Cumulative number of positive cases in " + mainMenu[mainMenuChoice] + ": " + a);
             } else if (p == 2) {
                 //Total cumulative dec
@@ -257,7 +295,7 @@ public class MenuProgram {
                 c = (double)((b/a) * 100);
                 c = Math.round(c);
 
-                System.out.println(c + "% (" + b + "/" + a + ") cases deceased in " + mainMenu[mainMenuChoice] + ".");
+                System.out.println((int)c + "% (" + b + "/" + a + ") cases deceased in " + mainMenu[mainMenuChoice] + ".");
 
             } else if (p == 7) {
                 //All of the above
@@ -292,7 +330,7 @@ public class MenuProgram {
     public static int searchCovRecObjContinent(CovidRecord[] pCovRecArr, String pFilter) {
         int a = 0;
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getContinent() == pFilter) {
+            if (pCovRecArr[i].getContinent().equals(pFilter)) {
                 a = a + 1;
             }
         }
@@ -303,7 +341,19 @@ public class MenuProgram {
         CovidRecord[] filterArray = new CovidRecord[a];
         a = 0;
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getContinent() == pFilter) {
+            if (pCovRecArr[i].getContinent().equals(pFilter)) {
+                filterArray[a] = pCovRecArr[i];
+                a = a + 1;
+            }
+        }
+        return filterArray;
+    }
+
+    public static CovidRecord[] setCovRecFilObjCountry(int a, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[a];
+        a = 0;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            if (pCovRecArr[i].getCountryName().equals(pFilter)) {
                 filterArray[a] = pCovRecArr[i];
                 a = a + 1;
             }
@@ -314,7 +364,7 @@ public class MenuProgram {
     public static int searchCovRecObjCountry(CovidRecord[] pCovRecArr, String pFilter) {
         int a = 0;
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getCountryName() == pFilter) {
+            if (pCovRecArr[i].getCountryName().equals(pFilter)) {
                 a = a + 1;
             }
         }
@@ -325,7 +375,7 @@ public class MenuProgram {
         CovidRecord[] filterArray = new CovidRecord[a];
         a = 0;
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getDate() == pFilter) {
+            if (pCovRecArr[i].getDate().equals(pFilter)) {
                 filterArray[a] = pCovRecArr[i];
                 a = a + 1;
             }
@@ -336,23 +386,11 @@ public class MenuProgram {
     public static int searchCovRecObjDate(CovidRecord[] pCovRecArr, String pFilter) {
         int a = 0;
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getDate() == pFilter) {
+            if (pCovRecArr[i].getDate().equals(pFilter)) {
                 a = a + 1;
             }
         }
         return a;
-    }
-
-    public static CovidRecord[] setCovRecFilObjCountry(int a, CovidRecord[] pCovRecArr, String pFilter) {
-        CovidRecord[] filterArray = new CovidRecord[a];
-        a = 0;
-        for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getCountryName() == pFilter) {
-                filterArray[a] = pCovRecArr[i];
-                a = a + 1;
-            }
-        }
-        return filterArray;
     }
 
     /*
@@ -397,8 +435,13 @@ public class MenuProgram {
     }
 
     /*
-    Method: outputMenu
-    Import: sc (scanner), menu (String array)
-    Export: a (integer)
+    Method: inputString
+    Import: sc (Scanner)
+    Export: a (String)
     */
+    public static String inputString(Scanner sc) {
+        String a;
+        a = sc.next();
+        return a;
+    }
 }

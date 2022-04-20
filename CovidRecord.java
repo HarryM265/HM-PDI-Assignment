@@ -88,6 +88,7 @@ public class CovidRecord extends Country{
         String tempString = super.toString();
         String covidRecordString;
         covidRecordString = tempString + 
+                            "\nDate: " + date + 
                             "\nCumulatively Positive: " + cumulativePos + 
                             "\nCumulatively Deceased: " + cumulativeDec +
                             "\nCumulatively Recovered: " + cumulativeRec +

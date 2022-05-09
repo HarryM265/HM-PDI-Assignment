@@ -14,35 +14,20 @@ import java.util.*;
 public class MenuProgram {
 //(Joint Research Centre Covid-19 Menu Program)
 
-    public static void main(String[] args) /*throws FileNotFoundException*/ {
+    public static void main(String[] args) {
         //TODO find NoSuchElementException / finish .csv info import
         //TODO data entry
-        /*
-        Scanner csvScanner = new Scanner(new File("C:\\Users\\Ducky\\OneDrive\\Documents\\Repositories\\PDI Assignment\\jrc-covid-19-all-days-of-world_ASSIGNMENT.csv"));
-        //parsing a CSV file into the constructor of Scanner class 
-        csvScanner.useDelimiter(",");
-        //setting comma as delimiter pattern
-        int c = 0;
-        while (csvScanner.hasNext()) {
-            if (csvScanner.next() != "") {
-                System.out.println(csvScanner.next());
-                c = c+1;
-            }
-        }
-        System.out.println(c);
-        csvScanner.close();
-        //closes the scanner  
-        */
+
+        //line.split(",") empty cells removed
+        //line.split(",", -1) empty cells includeds
 
         Scanner sc = new Scanner(System.in);
         /*Instantiate the Scanner system.in under the name 'sc'
         A scanner system.in function is how the program accepts user input*/
-        
-        int csvLength = 1784;
+        String fileName = "jrc-covid-19-all-days-of-world_ASSIGNMENT.csv";
+        int csvLength = findLengthOfCSV(fileName);
         CovidRecord[] covidRecordArray = new CovidRecord[csvLength];
-        for (int i = 0; i < covidRecordArray.length; i++) {
-            covidRecordArray[i] = new CovidRecord();
-        }
+        covidRecordArray = importFromCSV(fileName, covidRecordArray);
         for (int i = 0; i < covidRecordArray.length; i++) {System.out.println(covidRecordArray[i].toString() + "\n");} 
         //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
 
@@ -393,6 +378,81 @@ public class MenuProgram {
         }
         return a;
     }
+
+    public static int findLengthOfCSV(String pCSVName) {
+        FileInputStream fileStream = null;
+        InputStreamReader isr;
+        BufferedReader bufRdr;
+        int lineNum = 0;
+        String line;
+
+        try {
+            fileStream = new FileInputStream(pCSVName);
+            isr = new InputStreamReader(fileStream);
+            bufRdr = new BufferedReader(isr);
+            lineNum = 0;
+            line = bufRdr.readLine();
+
+            while (line != null) {
+                lineNum++;
+                line = bufRdr.readLine();
+            }
+            fileStream.close();
+        } catch (IOException e) {
+            if (fileStream != null) {
+                try {
+                    fileStream.close();
+                } catch (IOException e2){}
+            }
+            System.out.println("Error in fileProcessing: " + e.getMessage());
+        }
+        return lineNum;
+    }
+
+
+    public static CovidRecord[] importFromCSV(String fileName, CovidRecord[] covidRecordArray) {
+
+        FileInputStream fileStream = null;
+        InputStreamReader isr;
+        BufferedReader bufRdr;
+        int lineNum;
+        String line;
+
+        try {
+            fileStream = new FileInputStream(fileName);
+            isr = new InputStreamReader(fileStream);
+            bufRdr = new BufferedReader(isr);
+            lineNum = 1;
+            line = bufRdr.readLine();
+
+            while (line != null) {
+                lineNum++;
+
+                String[] lineArr = new String[13];
+                lineArr = processLine(line);
+                covidRecordArray[lineNum -1] = new CovidRecord(lineArr[0], lineArr[1], lineArr[2], lineArr[3], Double.parseDouble(lineArr[4]), Double.parseDouble(lineArr[5]), Integer.parseInt(lineArr[6]), Integer.parseInt(lineArr[7]), Integer.parseInt(lineArr[8]), Integer.parseInt(lineArr[9]), Integer.parseInt(lineArr[10]), Integer.parseInt(lineArr[11]), lineArr[12]);
+
+                line = bufRdr.readLine();
+            }
+            fileStream.close();
+        } catch (IOException e) {
+            if (fileStream != null) {
+                try {
+                    fileStream.close();
+                } catch (IOException e2){}
+            }
+            System.out.println("Error in fileProcessing: " + e.getMessage());
+        }
+        return covidRecordArray;
+    }
+
+    public static String[] processLine(String pLine) {
+        String[] splitLine;
+        splitLine = pLine.split(",", -1);
+
+        return splitLine;
+    }
+
 
     /*
     Method: averageOfArray

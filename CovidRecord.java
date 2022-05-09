@@ -9,15 +9,17 @@ public class CovidRecord extends Country{
     private int cumulativePos;
     private int cumulativeDec;
     private int cumulativeRec;
+    private int currentlyPos;
     private int hospitalised;
     private int intensiveCare;
     
     //Parameters constructor
-    CovidRecord(String pIso3, String pContinent, String pCountryName, String pNuts, double pLat, double pLon, String date, int pCumulativePos, int pCumulativeDec, int pCumulativeRec, int pHospitalised, int pIntensiveCare) {
+    CovidRecord(String date, String pIso3, String pContinent, String pCountryName, double pLat, double pLon, int pCumulativePos, int pCumulativeDec, int pCumulativeRec, int pCurrentlyPos, int pHospitalised, int pIntensiveCare, String pNuts) {
         super(pIso3, pContinent, pCountryName, pNuts, pLat, pLon);
         cumulativePos   = pCumulativePos;
         cumulativeDec   = pCumulativeDec;
         cumulativeRec   = pCumulativeRec;
+        currentlyPos    = pCurrentlyPos;
         hospitalised    = pHospitalised;
         intensiveCare   = pIntensiveCare;
     }
@@ -29,6 +31,7 @@ public class CovidRecord extends Country{
         cumulativePos   = pCovidRecord.getCumulativePos();
         cumulativeDec   = pCovidRecord.getCumulativeDec();
         cumulativeRec   = pCovidRecord.getCumulativeRec();
+        currentlyPos    = pCovidRecord.getCurrentlyPos();
         hospitalised    = pCovidRecord.getHospitalised();
         intensiveCare   = pCovidRecord.getIntensiveCare();
     }
@@ -40,6 +43,7 @@ public class CovidRecord extends Country{
         cumulativePos = 2134;
         cumulativeDec = 2134;
         cumulativeRec = 2134;
+        currentlyPos  = 2134;
         hospitalised  = 2134;
         intensiveCare = 2134;
     }
@@ -63,6 +67,9 @@ public class CovidRecord extends Country{
     public int getIntensiveCare() {
         return intensiveCare;
     }
+    public int getCurrentlyPos() {
+        return currentlyPos;
+    }
 
     //Mutator methods
     public void setDate(String pDate) {
@@ -83,6 +90,9 @@ public class CovidRecord extends Country{
     public void setIntensiveCare(int pIntensiveCare) {
         intensiveCare = pIntensiveCare;
     }
+    public void setCurrentlyPos(int pCurrentlyPos) {
+        currentlyPos = pCurrentlyPos;
+    }
 
     public String toString() {
         String tempString = super.toString();
@@ -92,6 +102,7 @@ public class CovidRecord extends Country{
                             "\nCumulatively Positive: " + cumulativePos + 
                             "\nCumulatively Deceased: " + cumulativeDec +
                             "\nCumulatively Recovered: " + cumulativeRec +
+                            "\nCurrently Positive: " + currentlyPos + 
                             "\nHospitalised: " + hospitalised + ", Intensive Care: " + intensiveCare;
         return covidRecordString;
     }

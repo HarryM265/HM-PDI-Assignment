@@ -286,7 +286,7 @@ public class MenuProgram {
                 b = calcTotal(cumDecArray);
 
                 c = (double)((b/a) * 100);
-                c = Math.round(c);
+                //c = Math.round(c);
 
                 System.out.println((int)c + "% (" + b + "/" + a + ") cases deceased in " + mainMenu[mainMenuChoice] + ".");
 
@@ -483,7 +483,7 @@ public class MenuProgram {
         return lineNum;
     }
 
-
+    //TODO fix importFromCSV toString outputting as blank
     public static CovidRecord[] importFromCSV(String fileName, CovidRecord[] covidRecordArray) {
 
         FileInputStream fileStream = null;

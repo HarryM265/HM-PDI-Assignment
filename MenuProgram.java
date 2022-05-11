@@ -8,7 +8,7 @@ Description:
 
 //import java.io.File;
 //import java.io.FileNotFoundException;
-import java.net.DatagramSocketImplFactory;
+import java.io.*;
 import java.util.*;
 
 public class MenuProgram {
@@ -19,7 +19,7 @@ public class MenuProgram {
         //TODO data entry
 
         //line.split(",") empty cells removed
-        //line.split(",", -1) empty cells includeds
+        //line.split(",", -1) empty cells included
 
         Scanner sc = new Scanner(System.in);
         /*Instantiate the Scanner system.in under the name 'sc'

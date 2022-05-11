@@ -38,7 +38,7 @@ public class MenuProgram {
         } 
         //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
 
-        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + csvLength + " records have been loaded.\n");
+        System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + (csvLength -1) + " records have been loaded.\n");
 
         String[] menu1 = new String[10];
         menu1[0] = "Exit";
@@ -174,7 +174,7 @@ public class MenuProgram {
                 while (a <= 0) {
                     System.out.print("Your input does not match any country name in the database, try again, remember to use capital letters: ");
                     input = inputString(sc);
-                    a = searchCovRecObjDate(covidRecordArray, input);
+                    a = searchCovRecObjCountry(covidRecordArray, input);
                 }
 
                 CovidRecord[] filterArray = new CovidRecord[a];
@@ -345,32 +345,49 @@ public class MenuProgram {
 
     public static int searchCovRecObjContinent(CovidRecord[] pCovRecArr, String pFilter) {
         int a = 0;
+        String currContinent = "";
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getContinent().equals(pFilter)) {
+            try {
+                currContinent = pCovRecArr[i].getContinent();
+            } catch (NullPointerException e) {}
+            if (currContinent.equals(pFilter)) {
                 a = a + 1;
             }
         }
-        return a;
+        return a -1;
     }
 
-    public static CovidRecord[] setCovRecFilObjContinent(int a, CovidRecord[] pCovRecArr, String pFilter) {
-        CovidRecord[] filterArray = new CovidRecord[a];
-        a = 0;
+    public static CovidRecord[] setCovRecFilObjContinent(int pfilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[pfilterArrayLength];
+        int a = 0;
+        String currContinent = "";
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getContinent().equals(pFilter)) {
-                filterArray[a] = pCovRecArr[i];
+            try {
+                currContinent = pCovRecArr[i].getContinent();
+            } catch (NullPointerException e) {}
+            if (currContinent.equals(pFilter)) {
+                try {
+                    filterArray[a] = pCovRecArr[i];
+                } catch (ArrayIndexOutOfBoundsException e) {}
                 a = a + 1;
             }
         }
-        return filterArray;
+        return (filterArray);
     }
 
-    public static CovidRecord[] setCovRecFilObjCountry(int a, CovidRecord[] pCovRecArr, String pFilter) {
-        CovidRecord[] filterArray = new CovidRecord[a];
-        a = 0;
+    public static CovidRecord[] setCovRecFilObjCountry(int pfilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[pfilterArrayLength];
+        System.out.println(pfilterArrayLength);
+        int a = 0;
+        String currCountryName = "";
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getCountryName().equals(pFilter)) {
-                filterArray[a] = pCovRecArr[i];
+            try {
+                currCountryName = pCovRecArr[i].getCountryName();
+            } catch (NullPointerException e) {}
+            if (currCountryName.equals(pFilter)) {
+                try {
+                    filterArray[a] = pCovRecArr[i];
+                } catch (ArrayIndexOutOfBoundsException e) {}
                 a = a + 1;
             }
         }
@@ -379,20 +396,33 @@ public class MenuProgram {
 
     public static int searchCovRecObjCountry(CovidRecord[] pCovRecArr, String pFilter) {
         int a = 0;
+        String currCountryName;
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getCountryName().equals(pFilter)) {
+            try {
+                currCountryName = pCovRecArr[i].getCountryName();
+            } catch (NullPointerException e) {
+                currCountryName = "";
+            }
+            if (currCountryName.equals(pFilter)) {
+                System.out.println(a + " - " + i);
                 a = a + 1;
             }
         }
-        return a;
+        return a -1;
     }
 
-    public static CovidRecord[] setCovRecFilObjDate(int a, CovidRecord[] pCovRecArr, String pFilter) {
-        CovidRecord[] filterArray = new CovidRecord[a];
-        a = 0;
+    public static CovidRecord[] setCovRecFilObjDate(int pFilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[pFilterArrayLength];
+        int a = 0;
+        String currDate = "";
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getDate().equals(pFilter)) {
-                filterArray[a] = pCovRecArr[i];
+            try {
+                currDate = pCovRecArr[i].getDate();
+            } catch (NullPointerException e) {}
+            if (currDate.equals(pFilter)) {
+                try {
+                    filterArray[a] = pCovRecArr[i];
+                } catch (ArrayIndexOutOfBoundsException e) {}
                 a = a + 1;
             }
         }
@@ -401,12 +431,16 @@ public class MenuProgram {
 
     public static int searchCovRecObjDate(CovidRecord[] pCovRecArr, String pFilter) {
         int a = 0;
+        String currDate = "";
         for (int i = 0; i < pCovRecArr.length; i++) {
-            if (pCovRecArr[i].getDate().equals(pFilter)) {
+            try {
+                currDate = pCovRecArr[i].getDate();
+            } catch (NullPointerException e) {}
+            if (currDate.equals(pFilter)) {
                 a = a + 1;
             }
         }
-        return a;
+        return a -1;
     }
 
     public static int findLengthOfCSV(String pCSVName) {

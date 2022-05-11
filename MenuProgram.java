@@ -2,7 +2,7 @@
 Title: MenuProgram
 Author: Harrison D. Miles
 Created: 18/04/2022
-Modified: 19/04/2022
+Modified: 11/05/2022
 Description: 
 */
 
@@ -28,7 +28,14 @@ public class MenuProgram {
         int csvLength = findLengthOfCSV(fileName);
         CovidRecord[] covidRecordArray = new CovidRecord[csvLength];
         covidRecordArray = importFromCSV(fileName, covidRecordArray);
-        for (int i = 0; i < covidRecordArray.length; i++) {System.out.println(covidRecordArray[i].toString() + "\n");} 
+
+        for (int i = 0; i < covidRecordArray.length; i++) {
+            String covidRecordString = "";
+            try {
+                covidRecordString = covidRecordArray[i].toString();
+            } catch (Exception e) {}
+            System.out.println(covidRecordString + "\n");
+        } 
         //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
 
         System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + csvLength + " records have been loaded.\n");
@@ -222,7 +229,7 @@ public class MenuProgram {
                 int[] cumPosArray;
                 int a;
 
-                cumPosArray = distObjToArray(covidRecordArray, 0);
+                cumPosArray = distCovRecToCumPos(covidRecordArray);
                 a = calcTotal(cumPosArray);
                 //TODO make more readable output for the user with an if-then
                 System.out.println("Cumulative number of positive cases in " + mainMenu[mainMenuChoice] + ": " + a);
@@ -231,7 +238,7 @@ public class MenuProgram {
                 int[] cumDecArray;
                 int a;
                 
-                cumDecArray = distObjToArray(covidRecordArray, 1);
+                cumDecArray = distCovRecToCumDec(covidRecordArray);
                 a = calcTotal(cumDecArray);
 
                 System.out.println("Cumulative number of deceased people (as a result of COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a + ".");
@@ -240,7 +247,7 @@ public class MenuProgram {
                 int[] cumRecArray;
                 int a;
 
-                cumRecArray = distObjToArray(covidRecordArray, 2);
+                cumRecArray = distCovRecToCumRec(covidRecordArray);
                 a = calcTotal(cumRecArray);
 
                 System.out.println("Cumulative number of recovered people (from COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a + ".");
@@ -254,10 +261,10 @@ public class MenuProgram {
                 int a, b;
                 double c;
 
-                cumPosArray = distObjToArray(covidRecordArray, 0);
+                cumPosArray = distCovRecToCumPos(covidRecordArray);
                 a = calcTotal(cumPosArray);
 
-                cumRecArray = distObjToArray(covidRecordArray, 2);
+                cumRecArray = distCovRecToCumRec(covidRecordArray);
                 b = calcTotal(cumRecArray);
 
                 c = (double)((b/a) * 100);
@@ -272,10 +279,10 @@ public class MenuProgram {
                 int a, b;
                 double c;
 
-                cumPosArray = distObjToArray(covidRecordArray, 0);
+                cumPosArray = distCovRecToCumPos(covidRecordArray);
                 a = calcTotal(cumPosArray);
 
-                cumDecArray = distObjToArray(covidRecordArray, 1);
+                cumDecArray = distCovRecToCumDec(covidRecordArray);
                 b = calcTotal(cumDecArray);
 
                 c = (double)((b/a) * 100);
@@ -294,21 +301,44 @@ public class MenuProgram {
         
     }
 
-    public static int[] distObjToArray(CovidRecord[] pCovRecArray, int pDistPref) { //Distinguish Object To Array
-        int[] outputArray = new int[pCovRecArray.length];
+    public static int[] distCovRecToCumPos(CovidRecord[] pCovRecArray) {
+        int inArrayLength = pCovRecArray.length;
+        int[] outputArray = new int[inArrayLength];
 
-        if (pDistPref == 0) { //Cumulative Positive
-            for (int i = 0; i < outputArray.length; i++) {
-                outputArray[i] = pCovRecArray[i].getCumulativePos();
-            }
-        } else if (pDistPref == 1) { //Cumulative Deceased
-            for (int i = 0; i < outputArray.length; i++) {
-                outputArray[i] = pCovRecArray[i].getCumulativeDec();
-            }
-        } else if (pDistPref == 2) { //Cumulative Recovered
-            for (int i = 0; i < outputArray.length; i++) {
-                outputArray[i] = pCovRecArray[i].getCumulativeRec();
-            }
+        for (int i = 0; i < inArrayLength; i++) {
+            int cumPos = 0;
+            try {
+                cumPos = pCovRecArray[i].getCumulativePos();
+            } catch (NullPointerException e) {}
+            outputArray[i] = cumPos;
+        }
+        return outputArray;
+    }
+
+    public static int[] distCovRecToCumDec(CovidRecord[] pCovRecArray) {
+        int inArrayLength = pCovRecArray.length;
+        int[] outputArray = new int[inArrayLength];
+
+        for (int i = 0; i < inArrayLength; i++) {
+            int cumDec = 0;
+            try {
+                cumDec = pCovRecArray[i].getCumulativeDec();
+            } catch (NullPointerException e) {}
+            outputArray[i] = cumDec;
+        }
+        return outputArray;
+    }
+
+    public static int[] distCovRecToCumRec(CovidRecord[] pCovRecArray) {
+        int inArrayLength = pCovRecArray.length;
+        int[] outputArray = new int[inArrayLength];
+
+        for (int i = 0; i < inArrayLength; i++) {
+            int cumRec = 0;
+            try {
+                cumRec = pCovRecArray[i].getCumulativeRec();
+            } catch (NullPointerException e) {}
+            outputArray[i] = cumRec;
         }
         return outputArray;
     }
@@ -422,7 +452,7 @@ public class MenuProgram {
             fileStream = new FileInputStream(fileName);
             isr = new InputStreamReader(fileStream);
             bufRdr = new BufferedReader(isr);
-            lineNum = 1;
+            lineNum = 0;
             line = bufRdr.readLine();
 
             while (line != null) {
@@ -430,7 +460,9 @@ public class MenuProgram {
 
                 String[] lineArr = new String[13];
                 lineArr = processLine(line);
-                covidRecordArray[lineNum -1] = new CovidRecord(lineArr[0], lineArr[1], lineArr[2], lineArr[3], Double.parseDouble(lineArr[4]), Double.parseDouble(lineArr[5]), Integer.parseInt(lineArr[6]), Integer.parseInt(lineArr[7]), Integer.parseInt(lineArr[8]), Integer.parseInt(lineArr[9]), Integer.parseInt(lineArr[10]), Integer.parseInt(lineArr[11]), lineArr[12]);
+                try {
+                    covidRecordArray[lineNum -1] = new CovidRecord(lineArr[0], lineArr[1], lineArr[2], lineArr[3], Double.parseDouble(lineArr[4]), Double.parseDouble(lineArr[5]), Integer.parseInt(lineArr[6]), Integer.parseInt(lineArr[7]), Integer.parseInt(lineArr[8]), Integer.parseInt(lineArr[9]), Integer.parseInt(lineArr[10]), Integer.parseInt(lineArr[11]), lineArr[12]);
+                } catch (NumberFormatException e) {}
 
                 line = bufRdr.readLine();
             }
@@ -448,6 +480,7 @@ public class MenuProgram {
 
     public static String[] processLine(String pLine) {
         String[] splitLine;
+        //System.out.println(pLine);
         splitLine = pLine.split(",", -1);
 
         return splitLine;

@@ -13,10 +13,7 @@ import java.util.*;
 
 public class MenuProgram {
 //(Joint Research Centre Covid-19 Menu Program)
-
     public static void main(String[] args) {
-        //TODO find NoSuchElementException / finish .csv info import
-        //TODO data entry
 
         //line.split(",") empty cells removed
         //line.split(",", -1) empty cells included
@@ -30,10 +27,12 @@ public class MenuProgram {
         covidRecordArray = importFromCSV(fileName, covidRecordArray);
 
         for (int i = 0; i < covidRecordArray.length; i++) {
-            String covidRecordString = "";
+            String covidRecordString;
             try {
                 covidRecordString = covidRecordArray[i].toString();
-            } catch (Exception e) {}
+            } catch (NullPointerException e) {
+                covidRecordString = "NullPointerException caught (" + e.getMessage() + ") as CovidRecord[" + i + "]" + " is null.";
+            }
             System.out.println(covidRecordString + "\n");
         } 
         //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
@@ -219,7 +218,6 @@ public class MenuProgram {
         boolean run = true;
         do {
             p = outputMenu(sc, statMenuArray);
-            //TODO finish displayStatistic method
             if (p == 0) {
                 //Exit Code
                 run = false;
@@ -483,7 +481,6 @@ public class MenuProgram {
         return lineNum;
     }
 
-    //TODO fix importFromCSV toString outputting as blank
     public static CovidRecord[] importFromCSV(String fileName, CovidRecord[] covidRecordArray) {
 
         FileInputStream fileStream = null;
@@ -502,11 +499,7 @@ public class MenuProgram {
             while (line != null) {
                 lineNum++;
 
-                String[] lineArr = new String[13];
-                lineArr = processLine(line);
-                try {
-                    covidRecordArray[lineNum -1] = new CovidRecord(lineArr[0], lineArr[1], lineArr[2], lineArr[3], Double.parseDouble(lineArr[4]), Double.parseDouble(lineArr[5]), Integer.parseInt(lineArr[6]), Integer.parseInt(lineArr[7]), Integer.parseInt(lineArr[8]), Integer.parseInt(lineArr[9]), Integer.parseInt(lineArr[10]), Integer.parseInt(lineArr[11]), lineArr[12]);
-                } catch (NumberFormatException e) {}
+                covidRecordArray[lineNum -1] = lineToCovidRecord(line);
 
                 line = bufRdr.readLine();
             }
@@ -528,6 +521,77 @@ public class MenuProgram {
         splitLine = pLine.split(",", -1);
 
         return splitLine;
+    }
+
+    public static CovidRecord lineToCovidRecord(String pLine) {
+        String[] splitLine = new String[13];
+        splitLine = processLine(pLine);
+        
+        CovidRecord covidRecord;
+
+        String date;
+        String iso3;
+        String continent;
+        String countryName;
+        double lat;
+        double lon;
+        int cumPos;
+        int cumDec;
+        int cumRec;
+        int currPos;
+        int hospitalised;
+        int intensiveCare;
+        String nuts;
+
+        date = splitLine[0];
+        iso3 = splitLine[1];
+        continent = splitLine[2];
+        countryName = splitLine[3];
+        nuts = splitLine[12];
+
+        try {
+            lat = Double.parseDouble(splitLine[4]);
+        } catch (NumberFormatException e) {
+            lat = 0;
+        }
+        try {
+            lon = Double.parseDouble(splitLine[5]);
+        } catch (NumberFormatException e) {
+            lon = 0;
+        }
+        try {
+            cumPos = Integer.parseInt(splitLine[6]);
+        } catch (NumberFormatException e) {
+            cumPos = 0;
+        }
+        try {
+            cumDec = Integer.parseInt(splitLine[7]);
+        } catch (NumberFormatException e) {
+            cumDec = 0;
+        }
+        try {
+            cumRec = Integer.parseInt(splitLine[8]);
+        } catch (NumberFormatException e) {
+            cumRec = 0;
+        }
+        try {
+            currPos = Integer.parseInt(splitLine[9]);
+        } catch (NumberFormatException e) {
+            currPos = 0;
+        }
+        try {
+            hospitalised = Integer.parseInt(splitLine[10]);
+        } catch (NumberFormatException e) {
+            hospitalised = 0;
+        }
+        try {
+            intensiveCare = Integer.parseInt(splitLine[11]);
+        } catch (NumberFormatException e) {
+            intensiveCare = 0;
+        }
+
+        covidRecord = new CovidRecord(date, iso3, continent, countryName, lat, lon, cumPos, cumDec, cumRec, currPos, hospitalised, intensiveCare, nuts);
+        return covidRecord;
     }
 
 

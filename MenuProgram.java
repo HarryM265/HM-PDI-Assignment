@@ -26,16 +26,7 @@ public class MenuProgram {
         CovidRecord[] covidRecordArray = new CovidRecord[csvLength];
         covidRecordArray = importFromCSV(fileName, covidRecordArray);
 
-        for (int i = 0; i < covidRecordArray.length; i++) {
-            String covidRecordString;
-            try {
-                covidRecordString = covidRecordArray[i].toString();
-            } catch (NullPointerException e) {
-                covidRecordString = "NullPointerException caught (" + e.getMessage() + ") as CovidRecord[" + i + "]" + " is null.";
-            }
-            System.out.println(covidRecordString + "\n");
-        } 
-        //OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
+        //testCSVImportValues(covidRecordArray);//OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
 
         System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + (csvLength -1) + " records have been loaded.\n");
 
@@ -51,7 +42,7 @@ public class MenuProgram {
         menu1[8] = "A country";
         menu1[9] = "A date";
 
-        String[] menu2 = new String[8];
+        String[] menu2 = new String[8];        
         menu2[0] = "Exit";
         menu2[1] = "Total number of cumulatively positive cases";
         menu2[2] = "Total number of cumulatively deceased cases";
@@ -69,6 +60,18 @@ public class MenuProgram {
         }
         //Close the scanner (important to only do this once)
         sc.close();
+    }
+
+    public static void testCSVImportValues(CovidRecord[] pCovidRecords) {
+        for (int i = 0; i < pCovidRecords.length; i++) {
+            String covidRecordString;
+            try {
+                covidRecordString = pCovidRecords[i].toString();
+            } catch (NullPointerException e) {
+                covidRecordString = "NullPointerException caught (" + e.getMessage() + ") as CovidRecord[" + i + "]" + " is null.";
+            }
+            System.out.println(covidRecordString + "\n");
+        } 
     }
 
     /*

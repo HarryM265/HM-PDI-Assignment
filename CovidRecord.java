@@ -14,8 +14,9 @@ public class CovidRecord extends Country{
     private int intensiveCare;
     
     //Parameters constructor
-    CovidRecord(String date, String pIso3, String pContinent, String pCountryName, double pLat, double pLon, int pCumulativePos, int pCumulativeDec, int pCumulativeRec, int pCurrentlyPos, int pHospitalised, int pIntensiveCare, String pNuts) {
+    CovidRecord(String pDate, String pIso3, String pContinent, String pCountryName, double pLat, double pLon, int pCumulativePos, int pCumulativeDec, int pCumulativeRec, int pCurrentlyPos, int pHospitalised, int pIntensiveCare, String pNuts) {
         super(pIso3, pContinent, pCountryName, pNuts, pLat, pLon);
+        date            = pDate;
         cumulativePos   = pCumulativePos;
         cumulativeDec   = pCumulativeDec;
         cumulativeRec   = pCumulativeRec;

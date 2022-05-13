@@ -56,7 +56,9 @@ public class MenuProgram {
             displayMainMenu(sc, mainMenu, statisticMenu, covidRecordArray);
         } catch (InputMismatchException e) {
             //Catch error of type InputMismatchException and name it 'error'
-            System.out.println("Incorrect input type, please restart.\nError: " + e);
+            System.out.println("\nIncorrect input type.\nRestarting...\n");
+            String[] nullStringArr = new String[0];
+            main(nullStringArr);
         }
         //Close the scanner (important to only do this once)
         sc.close();

@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.*;
 
 public class MenuProgram {
+    //TODO rename variables to make more sense
 //(Joint Research Centre Covid-19 Menu Program)
     public static void main(String[] args) {
 
@@ -276,40 +277,38 @@ public class MenuProgram {
                 //Num and % of cumulative pos cases rec
                 int[] cumPosArray;
                 int[] cumRecArray;
-                int a, b;
-                double c;
+                double a, b, c;
 
                 cumPosArray = distCovRecToCumPos(covidRecordArray);
-                a = calcTotal(cumPosArray);
+                a = (double)calcTotal(cumPosArray);
 
                 cumRecArray = distCovRecToCumRec(covidRecordArray);
-                b = calcTotal(cumRecArray);
+                b = (double)calcTotal(cumRecArray);
 
-                c = (double)((b/a) * 100);
+                c = (b/a) * 100;
                 c = Math.round(c);
 
                 readableOutput = determineReadableMenuOutput(mainMenuChoice, mainMenu);
-                System.out.println(c + "% (" + b + "/" + a + ") cases recovered in " + readableOutput + ".");
+                System.out.println((int)c + "% (" + (int)b + "/" + (int)a + ") cases recovered in " + readableOutput + ".");
             } else if (p == 6) {
                 //Num and % of cumulative pos cases dec
                 int[] cumPosArray;
                 int[] cumDecArray;
-                int a, b;
-                double c;
+                double a, b, c;
 
                 cumPosArray = distCovRecToCumPos(covidRecordArray);
-                a = calcTotal(cumPosArray);
+                a = (double)calcTotal(cumPosArray);
 
                 cumDecArray = distCovRecToCumDec(covidRecordArray);
-                b = calcTotal(cumDecArray);
+                b = (double)calcTotal(cumDecArray);
 
-                c = (double)((b/a) * 100);
-                //c = Math.round(c);
+                c = (b/a) * 100;
+                c = Math.round(c);
 
                 readableOutput = determineReadableMenuOutput(mainMenuChoice, mainMenu);
-                System.out.println((int)c + "% (" + b + "/" + a + ") cases deceased in " + readableOutput + ".");
+                System.out.println((int)c + "% (" + (int)b + "/" + (int)a + ") cases deceased in " + readableOutput + ".");
             } else if (p == 7) {
-                //All of the above
+                //All of the above TODO
 
             } else {
                 System.out.println("Input is an invalid menu ID, please try again: \n");
@@ -455,7 +454,7 @@ public class MenuProgram {
                 currCountryName = "";
             }
             if (currCountryName.equals(pFilter)) {
-                System.out.println(a + " - " + i);
+                //System.out.println(a + " - " + i); ADDED FOR TESTING PURPOSES
                 a = a + 1;
             }
         }

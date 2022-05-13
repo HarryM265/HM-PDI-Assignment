@@ -12,12 +12,12 @@ import java.io.*;
 import java.util.*;
 
 public class MenuProgram {
+    //(Joint Research Centre Covid-19 Menu Program)
     //TODO rename variables to make more sense
-//(Joint Research Centre Covid-19 Menu Program)
+    //TODO remove all testing code
+    //TODO Comment important code
+    //TODO Write all assertions
     public static void main(String[] args) {
-
-        //line.split(",") empty cells removed
-        //line.split(",", -1) empty cells included
 
         Scanner sc = new Scanner(System.in);
         /*Instantiate the Scanner system.in under the name 'sc'

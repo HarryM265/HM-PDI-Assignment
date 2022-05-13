@@ -272,7 +272,7 @@ public class MenuProgram {
                 System.out.println("Going Back...");
             } else if (menuChoice == 1) {
                 //Total cumulative pos
-                PrintTotalCumPos(pCovidRecordArray, pMainMenuChoice, pMainMenu);
+                printTotalCumPos(pCovidRecordArray, pMainMenuChoice, pMainMenu);
             } else if (menuChoice == 2) {
                 //Total cumulative dec
                 printTotalCumDec(pCovidRecordArray, pMainMenuChoice, pMainMenu);
@@ -290,7 +290,7 @@ public class MenuProgram {
                 printPercentDecOverPos(pCovidRecordArray, pMainMenuChoice, pMainMenu);
             } else if (menuChoice == 7) {
                 //Print all of the above
-                PrintTotalCumPos(pCovidRecordArray, pMainMenuChoice, pMainMenu);
+                printTotalCumPos(pCovidRecordArray, pMainMenuChoice, pMainMenu);
                 printTotalCumDec(pCovidRecordArray, pMainMenuChoice, pMainMenu);
                 printTotalCumRec(pCovidRecordArray, pMainMenuChoice, pMainMenu);
                 printAvgDailyCurrPos(pCovidRecordArray, pMainMenuChoice, pMainMenu);
@@ -305,144 +305,170 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: printTotalCumPos
+    Import: pCovidRecordArray (CovidRecord array), pMainMenuChoice (int), pMainMenu (String array)
+    Export: nothing
     */
-    public static void PrintTotalCumPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
+    public static void printTotalCumPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumPosArray;
         int totalCumPos;
-        String readableOutput, out;
+        String readableOutput, out; 
 
+        //Distinguish pCovidRecordArray to an array of only the cumulative positive cases
         cumPosArray = distCovRecToCumPos(pCovidRecordArray);
         totalCumPos = calcTotal(cumPosArray);
 
+        //Output a readable string detailing the given statistic
         readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = "Cumulative number of positive cases in " + readableOutput + ": " + totalCumPos;
-
         System.out.println(out);
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: printTotalCumDec
+    Import: pCovidRecordArray (CovidRecord array), pMainMenuChoice (int), pMainMenu (String array)
+    Export: nothing
     */
     public static void printTotalCumDec(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumDecArray;
         int totalCumDec;
         String out, readableOutput;
                 
+        //Distinguish pCovidRecordArray to an array of only cumulative deceased
         cumDecArray = distCovRecToCumDec(pCovidRecordArray);
         totalCumDec = calcTotal(cumDecArray);
 
+        //Output a readable string detailing the given statistic
         readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = "Cumulative number of deceased people (as a result of COVID-19) in " + readableOutput + ": " + totalCumDec + ".";
         System.out.println(out);
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: printTotalCumRec
+    Import: pCovidRecordArray (CovidRecord array), pMainMenuChoice (int), pMainMenu (String array)
+    Export: nothing
     */
     public static void printTotalCumRec(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumRecArray;
         int totalCumRec;
         String out, readableOutput;
 
+        //Distinguish pCovidRecordArray to an array of only cumulative recovered
         cumRecArray = distCovRecToCumRec(pCovidRecordArray);
         totalCumRec = calcTotal(cumRecArray);
 
+        //Output a readable string detailing the given statistic
         readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = "Cumulative number of recovered people (from COVID-19) in " + readableOutput + ": " + totalCumRec + ".";
         System.out.println(out);
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: printAvgDailyCurrPos (print the average daily number of currently positive cases)
+    Import: pCovidRecordArray (CovidRecord array), pMainMenuChoice (int), pMainMenu (String array)
+    Export: nothing
+    Note: Assuming that the average is only approximate and all covid records aren't recorded on a leap year
     */
     public static void printAvgDailyCurrPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] currPosArray;
         int totalCurrPos, avgDailyCurrPos;
-        double avgLengthOfMonth, dubAvgDailyCurrPos;
+        double avgLengthOfMonth, dubAvgDailyCurrPos; //'dubAvgDailyCurrPos' is the double version of 'avgDailyCurrPos'
         String out, readableOutput;
 
-        avgLengthOfMonth = ((31.0 * 6.0) + (30.0 * 5.0) + 28.0) / 12.0; //Average length of a month (not including leap year)
+        //Average length of a month (not including leap year)
+        avgLengthOfMonth = ((31.0 * 6.0) + (30.0 * 5.0) + 28.0) / 12.0; 
 
+        //Distinguish pCovidRecordArray to an array of only currently positive
         currPosArray = distCovRecToCurrPos(pCovidRecordArray);
         totalCurrPos = calcTotal(currPosArray);
 
+        //Set 'avgDailyCurrPos' to the approximate average of daily currently positive cases
         dubAvgDailyCurrPos = (double)(totalCurrPos * avgLengthOfMonth) / 365.0;
         avgDailyCurrPos = (int)dubAvgDailyCurrPos;
-                
+        
+        //Output a readable string detailing the given statistic
         readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = "The (approximate) average daily currently positive number of cases in " + readableOutput + " is: " + avgDailyCurrPos;
         System.out.println(out);
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: printPercentRecOverPos
+    Import: pCovidRecordArray (CovidRecord array), pMainMenuChoice (int), pMainMenu (String array)
+    Export: nothing
     */
     public static void printPercentRecOverPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumPosArray, cumRecArray;
-        double cumPos, cumRec, percentRecOverPos;
+        //'percentRecOverPos' is cumulative recovered cases divided by cumulative positive cases as a percentage
+        double cumPos, cumRec, percentRecOverPos; 
         String out, readableOutput;
 
+        //Distinguish pCovidRecordArray to an array of only cumulative positive
         cumPosArray = distCovRecToCumPos(pCovidRecordArray);
         cumPos = (double)calcTotal(cumPosArray);
 
+        //Distinguish pCovidRecordArray to an array of only cumulative recovered
         cumRecArray = distCovRecToCumRec(pCovidRecordArray);
         cumRec = (double)calcTotal(cumRecArray);
 
+        //Divide the cumulative recovered cases by the cumulative positive and multiply by 100 
         percentRecOverPos = (cumRec/cumPos) * 100;
+        //Round 'percentRecOverPos' to a whole number
         percentRecOverPos = Math.round(percentRecOverPos);
 
+        //Output a readable string detailing the given statistic
         readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = (int)percentRecOverPos + "% (" + (int)cumRec + "/" + (int)cumPos + ") cases recovered in " + readableOutput + ".";
         System.out.println(out);
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: printPercentDecOverPos
+    Import: pCovidRecordArray (CovidRecord array), pMainMenuChoice (int), pMainMenu (String array)
+    Export: nothing
     */
     public static void printPercentDecOverPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumPosArray, cumDecArray;
         String out, readableOutput;
+        //'percentDecOverPos' is cumulative deceased cases divided by cumulative positive cases as a percentage
         double cumPos, cumDec, percentDecOverPos;
 
+        //Distinguish pCovidRecordArray to an array of only cumulative positive
         cumPosArray = distCovRecToCumPos(pCovidRecordArray);
         cumPos = (double)calcTotal(cumPosArray);
 
+        //Distinguish pCovidRecordArray to an array of only cumulative deceased
         cumDecArray = distCovRecToCumDec(pCovidRecordArray);
         cumDec = (double)calcTotal(cumDecArray);
 
+        //Divide the cumulative deceased cases by the cumulative positive and multiply by 100 
         percentDecOverPos = (cumDec/cumPos) * 100;
+        //Round 'percentDecOverPos' to a whole number
         percentDecOverPos = Math.round(percentDecOverPos);
 
+        //Output a readable string detailing the given statistic
         readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = (int)percentDecOverPos + "% (" + (int)cumDec + "/" + (int)cumPos + ") cases deceased in " + readableOutput + ".";
         System.out.println(out);
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: calcReadableString
+    Import: pMenuChoice (int), pMenu (String array)
+    Export: String
+    Note: Used to make the statistic ouput remind the user of their choice on the main menu
     */
     public static String calcReadableString(int pMenuChoice, String[] pMenu) {
         String output = "";
 
+        //If 'pMenuChoice' is between 1-7 (Inclusive)
         if (pMenuChoice == 1 || pMenuChoice == 2 || pMenuChoice == 3 || pMenuChoice == 4 || pMenuChoice == 5 || pMenuChoice == 6 || pMenuChoice == 7) {
             output = pMenu[pMenuChoice];
+        //If 'pMenuChoice' equals 8
         } else if (pMenuChoice == 8) {
             output = "the entred country";
+        //If 'pMenuChoice' equals 9
         } else if (pMenuChoice == 9) {
             output = "the entred date";
         }
@@ -450,18 +476,20 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: distCovRecToCumPos (Distinguish between covid records to cumulative positive)
+    Import: pCovRecArray (CovidRecords array)
+    Export: integer array
     */
     public static int[] distCovRecToCumPos(CovidRecord[] pCovRecArray) {
         int inArrayLength = pCovRecArray.length;
         int[] outputArray = new int[inArrayLength];
+        int cumPos = 0;
 
+        //From pCovRecArray[0] to the end, increment by 1
         for (int i = 0; i < inArrayLength; i++) {
-            int cumPos = 0;
             try {
                 cumPos = pCovRecArray[i].getCumulativePos();
+            //Catch any NullPointerException and do nothing with it
             } catch (NullPointerException e) {}
             outputArray[i] = cumPos;
         }

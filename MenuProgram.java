@@ -254,7 +254,19 @@ public class MenuProgram {
                 System.out.println("Cumulative number of recovered people (from COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a + ".");
             } else if (p == 4) {
                 //Avg daily number of positive cases
-                //TODO find out wtf this is
+                int[] currPosArray;
+                int totalCurrPos, avgDailyCurrPos;
+                double avgLengthOfMonth, dubAvgDailyCurrPos;
+
+                avgLengthOfMonth = ((31.0 * 6.0) + (30.0 * 5.0) + 28.0) / 12.0; //Average length of a month (not including leap year)
+
+                currPosArray = distCovRecToCurrPos(covidRecordArray);
+                totalCurrPos = calcTotal(currPosArray);
+
+                dubAvgDailyCurrPos = (double)(totalCurrPos * avgLengthOfMonth) / 365.0;
+                avgDailyCurrPos = (int)dubAvgDailyCurrPos;
+                
+                System.out.println("The (approximate) average daily currently positive number of cases in " + mainMenu[mainMenuChoice] + " is: " + avgDailyCurrPos);
             } else if (p == 5) {
                 //Num and % of cumulative pos cases rec
                 int[] cumPosArray;
@@ -340,6 +352,20 @@ public class MenuProgram {
                 cumRec = pCovRecArray[i].getCumulativeRec();
             } catch (NullPointerException e) {}
             outputArray[i] = cumRec;
+        }
+        return outputArray;
+    }
+
+    public static int[] distCovRecToCurrPos(CovidRecord[] pCovRecArray) {
+        int inArrayLength = pCovRecArray.length;
+        int[] outputArray = new int[inArrayLength];
+
+        for (int i = 0; i < inArrayLength; i++) {
+            int currPos = 0;
+            try {
+                currPos = pCovRecArray[i].getCurrentlyPos();
+            } catch (NullPointerException e) {}
+                outputArray[i] = currPos;
         }
         return outputArray;
     }
@@ -484,7 +510,7 @@ public class MenuProgram {
         return lineNum;
     }
 
-    public static CovidRecord[] importFromCSV(String fileName, CovidRecord[] covidRecordArray) {
+    public static CovidRecord[] importFromCSV(String pFileName, CovidRecord[] covidRecordArray) {
 
         FileInputStream fileStream = null;
         InputStreamReader isr;
@@ -493,7 +519,7 @@ public class MenuProgram {
         String line;
 
         try {
-            fileStream = new FileInputStream(fileName);
+            fileStream = new FileInputStream(pFileName);
             isr = new InputStreamReader(fileStream);
             bufRdr = new BufferedReader(isr);
             lineNum = 0;

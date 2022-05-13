@@ -2,12 +2,10 @@
 Title: MenuProgram
 Author: Harrison D. Miles
 Created: 18/04/2022
-Modified: 11/05/2022
-Description: 
+Modified: 13/05/2022
+Description: A menu program used to analyse the joint research centre's covid information.
 */
 
-//import java.io.File;
-//import java.io.FileNotFoundException;
 import java.io.*;
 import java.util.*;
 
@@ -16,11 +14,12 @@ public class MenuProgram {
     //TODO remove all testing code
     //TODO Comment important code
     //TODO Write all assertions
+
     public static void main(String[] args) {
 
+        //Scanner(System.in) is used to intake user inputs
         Scanner sc = new Scanner(System.in);
-        /*Instantiate the Scanner system.in under the name 'sc'
-        A scanner system.in function is how the program accepts user input*/
+        
         String fileName = "jrc-covid-19-all-days-of-world_ASSIGNMENT-FIXED.csv";
         int csvLength = findLengthOfCSV(fileName);
         CovidRecord[] covidRecordArray = new CovidRecord[csvLength];
@@ -28,6 +27,8 @@ public class MenuProgram {
 
         //testCSVImportValues(covidRecordArray);//OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
 
+        /*A Welcome message that states the name of the organisation that owns the program 
+        and a variable counter to detail the number of records loaded*/
         System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + (csvLength -1) + " records have been loaded.\n");
 
         String[] mainMenu = new String[10];
@@ -43,7 +44,7 @@ public class MenuProgram {
         mainMenu[9] = "Enter a date";
 
         String[] statMenu = new String[8];        
-        statMenu[0] = "Exit";
+        statMenu[0] = "Back";
         statMenu[1] = "Total number of cumulatively positive cases";
         statMenu[2] = "Total number of cumulatively deceased cases";
         statMenu[3] = "Total number of cumulatively recovered cases";
@@ -54,9 +55,10 @@ public class MenuProgram {
 
         try{
             displayMainMenu(sc, mainMenu, statMenu, covidRecordArray);
+        //Catch any inputs of the wrong type and restart the program
         } catch (InputMismatchException e) {
-            //Catch error of type InputMismatchException and name it 'error'
             System.out.println("\nIncorrect input type.\nRestarting...\n");
+            //nullStringArr is an empty array used to call main
             String[] nullStringArr = new String[0];
             main(nullStringArr);
         }
@@ -79,26 +81,33 @@ public class MenuProgram {
 
     /*
     Method: outputMenu
-    Import: sc (scanner), menu (String array)
-    Export: a (integer)
+    Import: sc (scanner), pMenu (String array)
+    Export: userInput (integer)
     */
     public static int outputMenu(Scanner sc, String[] pMenu) {
-        int a = 0, menuLength = pMenu.length;
+        int userInput = 0, menuLength = pMenu.length;
         System.out.println("Please select a option from below:\n");
         for (int i = 0; i < menuLength; i++) {
             System.out.println(i + " >  " + pMenu[i]);
         }
         do {
             System.out.print("\nEnter selection: ");
-            a = inputInt(sc);
-        } while (a < 0 && menuLength < a);
-        //While the input is outwith the menu array's length
-        return a;
+            userInput = inputInt(sc);
+            //While the user's input is outwith the menu array's length
+        } while (userInput < 0 && menuLength < userInput);
+        return userInput;
     }
 
+    /*
+    Method: displayMainMenu
+    Import: sc (Scanner), pMainMenu (String array), pStatMenu (String array), pCovidRecordArray (CovidRecord array)
+    Export: nothing
+    */
     public static void displayMainMenu(Scanner sc, String[] pMainMenu, String[] pStatMenu, CovidRecord[] pCovidRecordArray) {
+        //numCovRecMatchFilter is number of covid records that match the given filter
         int menuChoice, numCovRecMatchFilter;
         boolean run = true;
+        CovidRecord[] filterArray;
 
         do {
             menuChoice = outputMenu(sc, pMainMenu); 
@@ -116,74 +125,97 @@ public class MenuProgram {
             } else if (menuChoice == 2) {
                 //Countries in South America
 
-                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "SA"); //Set 'a' to the number of Covid Records in SA
-                CovidRecord[] filterArray = new CovidRecord[numCovRecMatchFilter]; //Make a new 'filterArray' with a length of 'a'
-                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "SA"); //Set the vaules of the 'filterArray' to all Covid Records in SA
+                //Set 'numCovRecMatchFilter' to the number of Covid Records in SA
+                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "SA");
+                //Make a new 'filterArray' with a length of 'numCovRecMatchFilter'
+                filterArray = new CovidRecord[numCovRecMatchFilter]; 
+                //Set the vaules of the 'filterArray' to all Covid Records in SA
+                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "SA");
 
                 displayStatistic(sc, pStatMenu, filterArray, pMainMenu, menuChoice);
 
             } else if(menuChoice == 3) {
                 //Countries in North America
 
-                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "NA"); //Set 'a' to the number of Covid Records in NA
-                CovidRecord[] filterArray = new CovidRecord[numCovRecMatchFilter]; //Make a new 'filterArray' with a length of 'a'
-                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "NA"); //Set the vaules of the 'filterArray' to all Covid Records in NA
+                //Set 'numCovRecMatchFilter' to the number of Covid Records in NA
+                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "NA");
+                //Make a new 'filterArray' with a length of 'numCovRecMatchFilter'
+                filterArray = new CovidRecord[numCovRecMatchFilter]; 
+                //Set the vaules of the 'filterArray' to all Covid Records in NA
+                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "NA"); 
 
                 displayStatistic(sc, pStatMenu, filterArray, pMainMenu, menuChoice);
 
             } else if(menuChoice == 4) {
                 //Countries in Oceania
 
-                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "OC"); //Set 'a' to the number of Covid Records in OC
-                CovidRecord[] filterArray = new CovidRecord[numCovRecMatchFilter]; //Make a new 'filterArray' with a length of 'a'
-                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "OC"); //Set the vaules of the 'filterArray' to all Covid Records in OC
+                //Set 'numCovRecMatchFilter' to the number of Covid Records in OC
+                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "OC"); 
+                //Make a new 'filterArray' with a length of 'numCovRecMatchFilter'
+                filterArray = new CovidRecord[numCovRecMatchFilter]; 
+                //Set the vaules of the 'filterArray' to all Covid Records in OC
+                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "OC"); 
 
                 displayStatistic(sc, pStatMenu, filterArray, pMainMenu, menuChoice);
 
             } else if(menuChoice == 5) {
                 //Countries in Asia
 
-                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "AS"); //Set 'a' to the number of Covid Records in AS
-                CovidRecord[] filterArray = new CovidRecord[numCovRecMatchFilter]; //Make a new 'filterArray' with a length of 'a'
-                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "AS"); //Set the vaules of the 'filterArray' to all Covid Records in AS
+                //Set 'numCovRecMatchFilter' to the number of Covid Records in AS
+                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "AS"); 
+                //Make a new 'filterArray' with a length of 'numCovRecMatchFilter'
+                filterArray = new CovidRecord[numCovRecMatchFilter]; 
+                //Set the vaules of the 'filterArray' to all Covid Records in AS
+                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "AS"); 
 
                 displayStatistic(sc, pStatMenu, filterArray, pMainMenu, menuChoice);
 
             } else if(menuChoice == 6) {
                 //Countries in Africa
                 
-                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "AF"); //Set 'a' to the number of Covid Records in AF
-                CovidRecord[] filterArray = new CovidRecord[numCovRecMatchFilter]; //Make a new 'filterArray' with a length of 'a'
-                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "AF"); //Set the vaules of the 'filterArray' to all Covid Records in AF
+                //Set 'numCovRecMatchFilter' to the number of Covid Records in AF
+                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "AF"); 
+                //Make a new 'filterArray' with a length of 'numCovRecMatchFilter'
+                filterArray = new CovidRecord[numCovRecMatchFilter]; 
+                //Set the vaules of the 'filterArray' to all Covid Records in AF
+                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "AF"); 
 
                 displayStatistic(sc, pStatMenu, filterArray, pMainMenu, menuChoice);
 
             } else if(menuChoice == 7) {
                 //Countries in Europe
                 
-                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "EU"); //Set 'a' to the number of Covid Records in EU
-                CovidRecord[] filterArray = new CovidRecord[numCovRecMatchFilter]; //Make a new 'filterArray' with a length of 'a'
-                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "EU"); //Set the vaules of the 'filterArray' to all Covid Records in EU
+                //Set 'numCovRecMatchFilter' to the number of Covid Records in EU
+                numCovRecMatchFilter = searchCovRecObjContinent(pCovidRecordArray, "EU"); 
+                //Make a new 'filterArray' with a length of 'numCovRecMatchFilter'
+                filterArray = new CovidRecord[numCovRecMatchFilter]; 
+                //Set the vaules of the 'filterArray' to all Covid Records in EU
+                filterArray = setCovRecFilObjContinent(numCovRecMatchFilter, pCovidRecordArray, "EU"); 
 
                 displayStatistic(sc, pStatMenu, filterArray, pMainMenu, menuChoice);
 
             } else if(menuChoice == 8) {
                 //Enter a country
                 
+                //Take a user's country String input and name it 'input'
                 String input;
                 System.out.print("Please enter the name of the country you would like to analyse: ");
                 input = inputString(sc);
 
+                //Find the number of covid records that match 'input'
                 numCovRecMatchFilter = searchCovRecObjCountry(pCovidRecordArray, input);
-                System.out.println(numCovRecMatchFilter);
 
+                //While the number of covid records that match the given filter is less than or equal to 0
                 while (numCovRecMatchFilter <= 0) {
+                    //Ask the user to re-input the String and find the number of covid records that match 'input'
                     System.out.print("Your input does not match any country name in the database, try again, remember to use capital letters: ");
                     input = inputString(sc);
                     numCovRecMatchFilter = searchCovRecObjCountry(pCovidRecordArray, input);
                 }
 
-                CovidRecord[] filterArray = new CovidRecord[numCovRecMatchFilter];
+                //set 'filterArray' length to the found number of covid records that match the filter
+                filterArray = new CovidRecord[numCovRecMatchFilter];
+                //Set the filter array to all records that match the filter
                 filterArray = setCovRecFilObjCountry(numCovRecMatchFilter, pCovidRecordArray, input);
 
                 displayStatistic(sc, pStatMenu, filterArray, pMainMenu, menuChoice);
@@ -191,19 +223,25 @@ public class MenuProgram {
             } else if(menuChoice == 9) {
                 //Enter a date
                 
+                //Take a user's country String input and name it 'input'
                 String input;
                 System.out.print("Please enter the date you would like to analyse: ");
                 input = inputString(sc);
 
+                //Find the number of covid records that match 'input'
                 numCovRecMatchFilter = searchCovRecObjDate(pCovidRecordArray, input);
 
+                //While the number of covid records that match the given filter is less than or equal to 0
                 while (numCovRecMatchFilter <= 0) {
+                    //Ask the user to re-input the String and find the number of covid records that match 'input'
                     System.out.print("Your input does not match any date in the database, try again using this format '12/2/2022': ");
                     input = inputString(sc);
                     numCovRecMatchFilter = searchCovRecObjDate(pCovidRecordArray, input);
                 }
 
-                CovidRecord[] filterArray = new CovidRecord[numCovRecMatchFilter];
+                //set 'filterArray' length to the found number of covid records that match the filter
+                filterArray = new CovidRecord[numCovRecMatchFilter];
+                //Set the filter array to all records that match the filter
                 filterArray = setCovRecFilObjDate(numCovRecMatchFilter, pCovidRecordArray, input);
 
                 displayStatistic(sc, pStatMenu, filterArray, pMainMenu, menuChoice);
@@ -212,22 +250,25 @@ public class MenuProgram {
                 System.out.println(menuChoice + " is an invalid menu ID, please try again: \n");
                 //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
             }
+        //Loop while the run variable is 'true'
         } while (run);
     }
 
     /*
     Method: displayStatistic
-    Import: sc (scanner), statMenuArray (String array), covidRecordArray (CovidRecord Array), mainMenu (String Array), mainMenuChoice (Integer)
+    Import: sc (scanner), pStatMenu (String array), pCovidRecordArray (CovidRecord Array), pMainMenu (String Array), pMainMenuChoice (Integer)
     Export: void
     */
     public static void displayStatistic(Scanner sc, String[] pStatMenu, CovidRecord[] pCovidRecordArray, String[] pMainMenu, int pMainMenuChoice) {
         int menuChoice;
-        boolean run = true;
+        boolean run = true; //Used in the do-while loop
         do {
+            //Output the statMenu and take the user's input
             menuChoice = outputMenu(sc, pStatMenu);
             if (menuChoice == 0) {
-                //Exit Code
-                run = false;
+                //Exit statMenu to mainMenu
+                run = false; //Used in the do-while loop
+                //Output a message for the user to understand what is happening
                 System.out.println("Going Back...");
             } else if (menuChoice == 1) {
                 //Total cumulative pos
@@ -259,10 +300,15 @@ public class MenuProgram {
                 System.out.println("Input is an invalid menu ID, please try again: \n");
                 //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
             }
-        } while (run);
-        
+        //Loop while 'run' is 'true'
+        } while (run);   
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static void PrintTotalCumPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumPosArray;
         int totalCumPos;
@@ -277,6 +323,11 @@ public class MenuProgram {
         System.out.println(out);
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static void printTotalCumDec(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumDecArray;
         int totalCumDec;
@@ -290,6 +341,11 @@ public class MenuProgram {
         System.out.println(out);
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static void printTotalCumRec(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumRecArray;
         int totalCumRec;
@@ -303,6 +359,11 @@ public class MenuProgram {
         System.out.println(out);
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static void printAvgDailyCurrPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] currPosArray;
         int totalCurrPos, avgDailyCurrPos;
@@ -322,6 +383,11 @@ public class MenuProgram {
         System.out.println(out);
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static void printPercentRecOverPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumPosArray, cumRecArray;
         double cumPos, cumRec, percentRecOverPos;
@@ -341,6 +407,11 @@ public class MenuProgram {
         System.out.println(out);
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static void printPercentDecOverPos(CovidRecord[] pCovidRecordArray, int pMainMenuChoice, String[] pMainMenu) {
         int[] cumPosArray, cumDecArray;
         String out, readableOutput;
@@ -360,6 +431,11 @@ public class MenuProgram {
         System.out.println(out);
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static String calcReadableString(int pMenuChoice, String[] pMenu) {
         String output = "";
 
@@ -373,6 +449,11 @@ public class MenuProgram {
         return output;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static int[] distCovRecToCumPos(CovidRecord[] pCovRecArray) {
         int inArrayLength = pCovRecArray.length;
         int[] outputArray = new int[inArrayLength];
@@ -387,6 +468,11 @@ public class MenuProgram {
         return outputArray;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static int[] distCovRecToCumDec(CovidRecord[] pCovRecArray) {
         int inArrayLength = pCovRecArray.length;
         int[] outputArray = new int[inArrayLength];
@@ -401,6 +487,11 @@ public class MenuProgram {
         return outputArray;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static int[] distCovRecToCumRec(CovidRecord[] pCovRecArray) {
         int inArrayLength = pCovRecArray.length;
         int[] outputArray = new int[inArrayLength];
@@ -415,6 +506,11 @@ public class MenuProgram {
         return outputArray;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static int[] distCovRecToCurrPos(CovidRecord[] pCovRecArray) {
         int inArrayLength = pCovRecArray.length;
         int[] outputArray = new int[inArrayLength];
@@ -429,6 +525,11 @@ public class MenuProgram {
         return outputArray;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static int searchCovRecObjContinent(CovidRecord[] pCovRecArr, String pFilter) {
         int numContinentMatchFilter = 0;
         String currContinent;
@@ -445,6 +546,11 @@ public class MenuProgram {
         return numContinentMatchFilter -1;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static CovidRecord[] setCovRecFilObjContinent(int pfilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
         CovidRecord[] filterArray = new CovidRecord[pfilterArrayLength];
         int filterArrayInd = 0;
@@ -465,6 +571,11 @@ public class MenuProgram {
         return (filterArray);
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static CovidRecord[] setCovRecFilObjCountry(int pfilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
         CovidRecord[] filterArray = new CovidRecord[pfilterArrayLength];
         System.out.println(pfilterArrayLength);
@@ -486,6 +597,11 @@ public class MenuProgram {
         return filterArray;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static int searchCovRecObjCountry(CovidRecord[] pCovRecArr, String pFilter) {
         int numCountryMatchFilter = 0;
         String currCountryName;
@@ -506,6 +622,11 @@ public class MenuProgram {
         return numCountryMatchFilter -1;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static CovidRecord[] setCovRecFilObjDate(int pFilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
         CovidRecord[] filterArray = new CovidRecord[pFilterArrayLength];
         int filterArrayInd = 0;
@@ -526,6 +647,11 @@ public class MenuProgram {
         return filterArray;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static int searchCovRecObjDate(CovidRecord[] pCovRecArr, String pFilter) {
         int numDateMatchFilter = 0;
         String currDate;
@@ -542,6 +668,11 @@ public class MenuProgram {
         return numDateMatchFilter -1;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static int findLengthOfCSV(String pCSVName) {
         FileInputStream fileStream = null;
         InputStreamReader isr;
@@ -572,6 +703,11 @@ public class MenuProgram {
         return lineNum;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static CovidRecord[] importFromCSV(String pFileName, CovidRecord[] pCovidRecordArray) {
 
         FileInputStream fileStream = null;
@@ -606,6 +742,11 @@ public class MenuProgram {
         return pCovidRecordArray;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static String[] processLine(String pLine) {
         String[] splitLine;
         //System.out.println(pLine);
@@ -614,6 +755,11 @@ public class MenuProgram {
         return splitLine;
     }
 
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
     public static CovidRecord lineToCovidRecord(String pLine) {
         int numColInCSV = 13;
         String[] splitLine = new String[numColInCSV];

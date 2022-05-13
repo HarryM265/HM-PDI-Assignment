@@ -33,14 +33,14 @@ public class MenuProgram {
         String[] menu1 = new String[10];
         menu1[0] = "Exit";
         menu1[1] = "All countries";
-        menu1[2] = "Countries in South America";
-        menu1[3] = "Countries in North America";
-        menu1[4] = "Countries in Oceania";
-        menu1[5] = "Countries in Asia";
-        menu1[6] = "Countries in Africa";
-        menu1[7] = "Counties in Europe";
-        menu1[8] = "A country";
-        menu1[9] = "A date";
+        menu1[2] = "South America";
+        menu1[3] = "North America";
+        menu1[4] = "Oceania";
+        menu1[5] = "Asia";
+        menu1[6] = "Africa";
+        menu1[7] = "Europe";
+        menu1[8] = "Enter a country";
+        menu1[9] = "Enter a date";
 
         String[] menu2 = new String[8];        
         menu2[0] = "Exit";
@@ -218,6 +218,7 @@ public class MenuProgram {
     */
     public static void displayStatistic(Scanner sc, String[] statMenuArray, CovidRecord[] covidRecordArray, String[] mainMenu, int mainMenuChoice) {
         int p;
+        String readableOutput;
         boolean run = true;
         do {
             p = outputMenu(sc, statMenuArray);
@@ -232,8 +233,9 @@ public class MenuProgram {
 
                 cumPosArray = distCovRecToCumPos(covidRecordArray);
                 a = calcTotal(cumPosArray);
-                //TODO make more readable output for the user with an if-then
-                System.out.println("Cumulative number of positive cases in " + mainMenu[mainMenuChoice] + ": " + a);
+
+                readableOutput = determineReadableMenuOutput(mainMenuChoice, mainMenu);
+                System.out.println("Cumulative number of positive cases in " + readableOutput + ": " + a);
             } else if (p == 2) {
                 //Total cumulative dec
                 int[] cumDecArray;
@@ -242,7 +244,8 @@ public class MenuProgram {
                 cumDecArray = distCovRecToCumDec(covidRecordArray);
                 a = calcTotal(cumDecArray);
 
-                System.out.println("Cumulative number of deceased people (as a result of COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a + ".");
+                readableOutput = determineReadableMenuOutput(mainMenuChoice, mainMenu);
+                System.out.println("Cumulative number of deceased people (as a result of COVID-19) in " + readableOutput + ": " + a + ".");
             } else if (p == 3) {
                 //Total cumulative rec
                 int[] cumRecArray;
@@ -251,7 +254,8 @@ public class MenuProgram {
                 cumRecArray = distCovRecToCumRec(covidRecordArray);
                 a = calcTotal(cumRecArray);
 
-                System.out.println("Cumulative number of recovered people (from COVID-19) in " + mainMenu[mainMenuChoice] + ": " + a + ".");
+                readableOutput = determineReadableMenuOutput(mainMenuChoice, mainMenu);
+                System.out.println("Cumulative number of recovered people (from COVID-19) in " + readableOutput + ": " + a + ".");
             } else if (p == 4) {
                 //Avg daily number of positive cases
                 int[] currPosArray;
@@ -266,7 +270,8 @@ public class MenuProgram {
                 dubAvgDailyCurrPos = (double)(totalCurrPos * avgLengthOfMonth) / 365.0;
                 avgDailyCurrPos = (int)dubAvgDailyCurrPos;
                 
-                System.out.println("The (approximate) average daily currently positive number of cases in " + mainMenu[mainMenuChoice] + " is: " + avgDailyCurrPos);
+                readableOutput = determineReadableMenuOutput(mainMenuChoice, mainMenu);
+                System.out.println("The (approximate) average daily currently positive number of cases in " + readableOutput + " is: " + avgDailyCurrPos);
             } else if (p == 5) {
                 //Num and % of cumulative pos cases rec
                 int[] cumPosArray;
@@ -283,8 +288,8 @@ public class MenuProgram {
                 c = (double)((b/a) * 100);
                 c = Math.round(c);
 
-                System.out.println(c + "% (" + b + "/" + a + ") cases recovered in " + mainMenu[mainMenuChoice] + ".");
-
+                readableOutput = determineReadableMenuOutput(mainMenuChoice, mainMenu);
+                System.out.println(c + "% (" + b + "/" + a + ") cases recovered in " + readableOutput + ".");
             } else if (p == 6) {
                 //Num and % of cumulative pos cases dec
                 int[] cumPosArray;
@@ -301,8 +306,8 @@ public class MenuProgram {
                 c = (double)((b/a) * 100);
                 //c = Math.round(c);
 
-                System.out.println((int)c + "% (" + b + "/" + a + ") cases deceased in " + mainMenu[mainMenuChoice] + ".");
-
+                readableOutput = determineReadableMenuOutput(mainMenuChoice, mainMenu);
+                System.out.println((int)c + "% (" + b + "/" + a + ") cases deceased in " + readableOutput + ".");
             } else if (p == 7) {
                 //All of the above
 
@@ -312,6 +317,19 @@ public class MenuProgram {
             }
         } while (run);
         
+    }
+
+    public static String determineReadableMenuOutput(int pMenuChoice, String[] pMenu) {
+        String output = "";
+
+        if (pMenuChoice == 1 || pMenuChoice == 2 || pMenuChoice == 3 || pMenuChoice == 4 || pMenuChoice == 5 || pMenuChoice == 6 || pMenuChoice == 7) {
+            output = pMenu[pMenuChoice];
+        } else if (pMenuChoice == 8) {
+            output = "The entred country";
+        } else if (pMenuChoice == 9) {
+            output = "The entred date";
+        }
+        return output;
     }
 
     public static int[] distCovRecToCumPos(CovidRecord[] pCovRecArray) {

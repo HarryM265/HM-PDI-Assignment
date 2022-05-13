@@ -21,7 +21,7 @@ public class MenuProgram {
         Scanner sc = new Scanner(System.in);
         /*Instantiate the Scanner system.in under the name 'sc'
         A scanner system.in function is how the program accepts user input*/
-        String fileName = "jrc-covid-19-all-days-of-world_ASSIGNMENT.csv";
+        String fileName = "jrc-covid-19-all-days-of-world_ASSIGNMENT-FIXED.csv";
         int csvLength = findLengthOfCSV(fileName);
         CovidRecord[] covidRecordArray = new CovidRecord[csvLength];
         covidRecordArray = importFromCSV(fileName, covidRecordArray);
@@ -42,18 +42,18 @@ public class MenuProgram {
         mainMenu[8] = "Enter a country";
         mainMenu[9] = "Enter a date";
 
-        String[] statisticMenu = new String[8];        
-        statisticMenu[0] = "Exit";
-        statisticMenu[1] = "Total number of cumulatively positive cases";
-        statisticMenu[2] = "Total number of cumulatively deceased cases";
-        statisticMenu[3] = "Total number of cumulatively recovered cases";
-        statisticMenu[4] = "Average daily number of currently positive cases";
-        statisticMenu[5] = "Number and percentage of cumulatively positive cases recovered";
-        statisticMenu[6] = "Number and percentage of cumulatively positive cases deceased";
-        statisticMenu[7] = "All of the above statistics";
+        String[] statMenu = new String[8];        
+        statMenu[0] = "Exit";
+        statMenu[1] = "Total number of cumulatively positive cases";
+        statMenu[2] = "Total number of cumulatively deceased cases";
+        statMenu[3] = "Total number of cumulatively recovered cases";
+        statMenu[4] = "Average daily number of currently positive cases";
+        statMenu[5] = "Number and percentage of cumulatively positive cases recovered";
+        statMenu[6] = "Number and percentage of cumulatively positive cases deceased";
+        statMenu[7] = "All of the above statistics";
 
         try{
-            displayMainMenu(sc, mainMenu, statisticMenu, covidRecordArray);
+            displayMainMenu(sc, mainMenu, statMenu, covidRecordArray);
         } catch (InputMismatchException e) {
             //Catch error of type InputMismatchException and name it 'error'
             System.out.println("\nIncorrect input type.\nRestarting...\n");
@@ -65,11 +65,11 @@ public class MenuProgram {
     }
 
     //IMPORTANT TO REMOVE THIS
-    public static void testCSVImportValues(CovidRecord[] pCovidRecords) {
-        for (int i = 0; i < pCovidRecords.length; i++) {
+    public static void testCSVImportValues(CovidRecord[] pCovidRecordArray) {
+        for (int i = 0; i < pCovidRecordArray.length; i++) {
             String covidRecordString;
             try {
-                covidRecordString = pCovidRecords[i].toString();
+                covidRecordString = pCovidRecordArray[i].toString();
             } catch (NullPointerException e) {
                 covidRecordString = "NullPointerException caught (" + e.getMessage() + ") as CovidRecord[" + i + "]" + " is null.";
             }
@@ -175,6 +175,7 @@ public class MenuProgram {
                 input = inputString(sc);
 
                 numCovRecMatchFilter = searchCovRecObjCountry(pCovidRecordArray, input);
+                System.out.println(numCovRecMatchFilter);
 
                 while (numCovRecMatchFilter <= 0) {
                     System.out.print("Your input does not match any country name in the database, try again, remember to use capital letters: ");
@@ -270,7 +271,7 @@ public class MenuProgram {
         cumPosArray = distCovRecToCumPos(pCovidRecordArray);
         totalCumPos = calcTotal(cumPosArray);
 
-        readableOutput = determineReadableMenuOutput(pMainMenuChoice, pMainMenu);
+        readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = "Cumulative number of positive cases in " + readableOutput + ": " + totalCumPos;
 
         System.out.println(out);
@@ -284,7 +285,7 @@ public class MenuProgram {
         cumDecArray = distCovRecToCumDec(pCovidRecordArray);
         totalCumDec = calcTotal(cumDecArray);
 
-        readableOutput = determineReadableMenuOutput(pMainMenuChoice, pMainMenu);
+        readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = "Cumulative number of deceased people (as a result of COVID-19) in " + readableOutput + ": " + totalCumDec + ".";
         System.out.println(out);
     }
@@ -297,7 +298,7 @@ public class MenuProgram {
         cumRecArray = distCovRecToCumRec(pCovidRecordArray);
         totalCumRec = calcTotal(cumRecArray);
 
-        readableOutput = determineReadableMenuOutput(pMainMenuChoice, pMainMenu);
+        readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = "Cumulative number of recovered people (from COVID-19) in " + readableOutput + ": " + totalCumRec + ".";
         System.out.println(out);
     }
@@ -316,7 +317,7 @@ public class MenuProgram {
         dubAvgDailyCurrPos = (double)(totalCurrPos * avgLengthOfMonth) / 365.0;
         avgDailyCurrPos = (int)dubAvgDailyCurrPos;
                 
-        readableOutput = determineReadableMenuOutput(pMainMenuChoice, pMainMenu);
+        readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = "The (approximate) average daily currently positive number of cases in " + readableOutput + " is: " + avgDailyCurrPos;
         System.out.println(out);
     }
@@ -335,7 +336,7 @@ public class MenuProgram {
         percentRecOverPos = (cumRec/cumPos) * 100;
         percentRecOverPos = Math.round(percentRecOverPos);
 
-        readableOutput = determineReadableMenuOutput(pMainMenuChoice, pMainMenu);
+        readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = (int)percentRecOverPos + "% (" + (int)cumRec + "/" + (int)cumPos + ") cases recovered in " + readableOutput + ".";
         System.out.println(out);
     }
@@ -354,20 +355,20 @@ public class MenuProgram {
         percentDecOverPos = (cumDec/cumPos) * 100;
         percentDecOverPos = Math.round(percentDecOverPos);
 
-        readableOutput = determineReadableMenuOutput(pMainMenuChoice, pMainMenu);
+        readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
         out = (int)percentDecOverPos + "% (" + (int)cumDec + "/" + (int)cumPos + ") cases deceased in " + readableOutput + ".";
         System.out.println(out);
     }
 
-    public static String determineReadableMenuOutput(int pMenuChoice, String[] pMenu) {
+    public static String calcReadableString(int pMenuChoice, String[] pMenu) {
         String output = "";
 
         if (pMenuChoice == 1 || pMenuChoice == 2 || pMenuChoice == 3 || pMenuChoice == 4 || pMenuChoice == 5 || pMenuChoice == 6 || pMenuChoice == 7) {
             output = pMenu[pMenuChoice];
         } else if (pMenuChoice == 8) {
-            output = "The entred country";
+            output = "the entred country";
         } else if (pMenuChoice == 9) {
-            output = "The entred date";
+            output = "the entred date";
         }
         return output;
     }
@@ -438,7 +439,7 @@ public class MenuProgram {
                 currContinent = "";
             }
             if (currContinent.equals(pFilter)) {
-                numContinentMatchFilter = numContinentMatchFilter++;
+                numContinentMatchFilter = numContinentMatchFilter +1;
             }
         }
         return numContinentMatchFilter -1;
@@ -458,7 +459,7 @@ public class MenuProgram {
                 try {
                     filterArray[filterArrayInd] = pCovRecArr[i];
                 } catch (ArrayIndexOutOfBoundsException e) {}
-                filterArrayInd = filterArrayInd++;
+                filterArrayInd = filterArrayInd +1;
             }
         }
         return (filterArray);
@@ -479,7 +480,7 @@ public class MenuProgram {
                 try {
                     filterArray[filterArrayInd] = pCovRecArr[i];
                 } catch (ArrayIndexOutOfBoundsException e) {}
-                filterArrayInd = filterArrayInd++;
+                filterArrayInd = filterArrayInd +1;
             }
         }
         return filterArray;
@@ -494,9 +495,12 @@ public class MenuProgram {
             } catch (NullPointerException e) {
                 currCountryName = "";
             }
+
+            //System.out.println("Current country is: " + currCountryName + " Compared to filter: " + pFilter);
+
             if (currCountryName.equals(pFilter)) {
-                //System.out.println(a + " - " + i); ADDED FOR TESTING PURPOSES
-                numCountryMatchFilter = numCountryMatchFilter++;
+                //System.out.println(numCountryMatchFilter + " - " + (i+1));
+                numCountryMatchFilter = numCountryMatchFilter + 1;
             }
         }
         return numCountryMatchFilter -1;
@@ -516,7 +520,7 @@ public class MenuProgram {
                 try {
                     filterArray[filterArrayInd] = pCovRecArr[i];
                 } catch (ArrayIndexOutOfBoundsException e) {}
-                filterArrayInd = filterArrayInd++;
+                filterArrayInd = filterArrayInd +1;
             }
         }
         return filterArray;
@@ -532,7 +536,7 @@ public class MenuProgram {
                 currDate = "";
             }
             if (currDate.equals(pFilter)) {
-                numDateMatchFilter = numDateMatchFilter++;
+                numDateMatchFilter = numDateMatchFilter +1;
             }
         }
         return numDateMatchFilter -1;
@@ -729,7 +733,9 @@ public class MenuProgram {
     */
     public static String inputString(Scanner sc) {
         String inpString;
-        inpString = sc.next();
+        sc.nextLine(); //Used to 'swallow' the \n that the sc.nextInt(); could not
+        inpString = sc.nextLine();
+
         return inpString;
     }
 }

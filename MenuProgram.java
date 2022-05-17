@@ -560,19 +560,22 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: searchCovRecObjContinent (Search CovidRecord array for number of matching Continents)
+    Import: pCovRecArr (CovidRecord array), pFilter (String)
+    Export: numContinentMatchFilter (int) (Number of continents that match the given filter)
     */
     public static int searchCovRecObjContinent(CovidRecord[] pCovRecArr, String pFilter) {
         int numContinentMatchFilter = 0;
         String currContinent;
+        //Loop from pCovRecArr[0] to end, incrementing by 1
         for (int i = 0; i < pCovRecArr.length; i++) {
             try {
                 currContinent = pCovRecArr[i].getContinent();
+            //Catch any NullPointerExceptions and change the variable to blank
             } catch (NullPointerException e) {
                 currContinent = "";
             }
+            //If 'currContinent' matches 'pFilter'
             if (currContinent.equals(pFilter)) {
                 numContinentMatchFilter = numContinentMatchFilter +1;
             }
@@ -581,24 +584,23 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: searchCovRecObjCountry (Search CovidRecord array for number of matching Countries)
+    Import: pCovRecArr (CovidRecord array), pFilter (string)
+    Export: numCountryMatchFilter (int)
     */
     public static int searchCovRecObjCountry(CovidRecord[] pCovRecArr, String pFilter) {
         int numCountryMatchFilter = 0;
         String currCountryName;
+        //Loop from pCovRecArr[0] to end, incrementing by 1
         for (int i = 0; i < pCovRecArr.length; i++) {
             try {
                 currCountryName = pCovRecArr[i].getCountryName();
+            //Catch any NullPointerExceptions and change the variable to blank
             } catch (NullPointerException e) {
                 currCountryName = "";
             }
-
-            //System.out.println("Current country is: " + currCountryName + " Compared to filter: " + pFilter);
-
+            //If 'currCountryName' matches 'pFilter'
             if (currCountryName.equals(pFilter)) {
-                //System.out.println(numCountryMatchFilter + " - " + (i+1));
                 numCountryMatchFilter = numCountryMatchFilter + 1;
             }
         }
@@ -606,19 +608,22 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: searchCovRecObjDate (Search CovidRecord array for number of matching dates)
+    Import: pCovRecArr (CovidRecord array), pFilter (String)
+    Export: numDateMatchFilter (Number of dates that match the filter)
     */
     public static int searchCovRecObjDate(CovidRecord[] pCovRecArr, String pFilter) {
         int numDateMatchFilter = 0;
         String currDate;
+        //Loop from pCovRecArr[0] to end, incrementing by 1
         for (int i = 0; i < pCovRecArr.length; i++) {
             try {
                 currDate = pCovRecArr[i].getDate();
+            //Catch any NullPointerExceptions and change the variable to blank
             } catch (NullPointerException e) {
                 currDate = "";
             }
+            //If 'currDate' matches 'pFilter'
             if (currDate.equals(pFilter)) {
                 numDateMatchFilter = numDateMatchFilter +1;
             }

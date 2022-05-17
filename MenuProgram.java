@@ -497,18 +497,20 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: distCovRecToCumDec (Distinguish Covid Records to Cumulative Deceased)
+    Import: pCovRecArray (CovidRecord array)
+    Export: outputArray (integer array)
     */
     public static int[] distCovRecToCumDec(CovidRecord[] pCovRecArray) {
         int inArrayLength = pCovRecArray.length;
         int[] outputArray = new int[inArrayLength];
 
+        //From covRecArray[0] to the end, increment by 1
         for (int i = 0; i < inArrayLength; i++) {
             int cumDec = 0;
             try {
                 cumDec = pCovRecArray[i].getCumulativeDec();
+            //Catch any NullPointerExceptions and do nothing with it
             } catch (NullPointerException e) {}
             outputArray[i] = cumDec;
         }
@@ -516,18 +518,20 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: distCovRecToCUmRec (Distinguish CovidRecord to Cumulative Recovered)
+    Import: pCovRecArray (CovidRecord array)
+    Export: outputArray (Integer array)
     */
     public static int[] distCovRecToCumRec(CovidRecord[] pCovRecArray) {
         int inArrayLength = pCovRecArray.length;
         int[] outputArray = new int[inArrayLength];
 
+        //Loop from pCovRecArray[0] to end, incrementing by 1
         for (int i = 0; i < inArrayLength; i++) {
             int cumRec = 0;
             try {
                 cumRec = pCovRecArray[i].getCumulativeRec();
+            //Catch any NullPointerExceptions and do nothing with it
             } catch (NullPointerException e) {}
             outputArray[i] = cumRec;
         }
@@ -535,18 +539,20 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: distCovRecToCurrPos (Distinguish CovidRecord to Currently Positive)
+    Import: pCovRecArray (CovidRecord array)
+    Export: outputArray (Integer array)
     */
     public static int[] distCovRecToCurrPos(CovidRecord[] pCovRecArray) {
         int inArrayLength = pCovRecArray.length;
         int[] outputArray = new int[inArrayLength];
 
+        //Loop from pCovRecArray[0] to end, incrementing by 1
         for (int i = 0; i < inArrayLength; i++) {
             int currPos = 0;
             try {
                 currPos = pCovRecArray[i].getCurrentlyPos();
+            //Catch any NullPointerExceptions and do nothing with it
             } catch (NullPointerException e) {}
                 outputArray[i] = currPos;
         }
@@ -572,6 +578,52 @@ public class MenuProgram {
             }
         }
         return numContinentMatchFilter -1;
+    }
+
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
+    public static int searchCovRecObjCountry(CovidRecord[] pCovRecArr, String pFilter) {
+        int numCountryMatchFilter = 0;
+        String currCountryName;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            try {
+                currCountryName = pCovRecArr[i].getCountryName();
+            } catch (NullPointerException e) {
+                currCountryName = "";
+            }
+
+            //System.out.println("Current country is: " + currCountryName + " Compared to filter: " + pFilter);
+
+            if (currCountryName.equals(pFilter)) {
+                //System.out.println(numCountryMatchFilter + " - " + (i+1));
+                numCountryMatchFilter = numCountryMatchFilter + 1;
+            }
+        }
+        return numCountryMatchFilter -1;
+    }
+
+    /*
+    Method: 
+    Import: 
+    Export: 
+    */
+    public static int searchCovRecObjDate(CovidRecord[] pCovRecArr, String pFilter) {
+        int numDateMatchFilter = 0;
+        String currDate;
+        for (int i = 0; i < pCovRecArr.length; i++) {
+            try {
+                currDate = pCovRecArr[i].getDate();
+            } catch (NullPointerException e) {
+                currDate = "";
+            }
+            if (currDate.equals(pFilter)) {
+                numDateMatchFilter = numDateMatchFilter +1;
+            }
+        }
+        return numDateMatchFilter -1;
     }
 
     /*
@@ -630,31 +682,6 @@ public class MenuProgram {
     Import: 
     Export: 
     */
-    public static int searchCovRecObjCountry(CovidRecord[] pCovRecArr, String pFilter) {
-        int numCountryMatchFilter = 0;
-        String currCountryName;
-        for (int i = 0; i < pCovRecArr.length; i++) {
-            try {
-                currCountryName = pCovRecArr[i].getCountryName();
-            } catch (NullPointerException e) {
-                currCountryName = "";
-            }
-
-            //System.out.println("Current country is: " + currCountryName + " Compared to filter: " + pFilter);
-
-            if (currCountryName.equals(pFilter)) {
-                //System.out.println(numCountryMatchFilter + " - " + (i+1));
-                numCountryMatchFilter = numCountryMatchFilter + 1;
-            }
-        }
-        return numCountryMatchFilter -1;
-    }
-
-    /*
-    Method: 
-    Import: 
-    Export: 
-    */
     public static CovidRecord[] setCovRecFilObjDate(int pFilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
         CovidRecord[] filterArray = new CovidRecord[pFilterArrayLength];
         int filterArrayInd = 0;
@@ -673,27 +700,6 @@ public class MenuProgram {
             }
         }
         return filterArray;
-    }
-
-    /*
-    Method: 
-    Import: 
-    Export: 
-    */
-    public static int searchCovRecObjDate(CovidRecord[] pCovRecArr, String pFilter) {
-        int numDateMatchFilter = 0;
-        String currDate;
-        for (int i = 0; i < pCovRecArr.length; i++) {
-            try {
-                currDate = pCovRecArr[i].getDate();
-            } catch (NullPointerException e) {
-                currDate = "";
-            }
-            if (currDate.equals(pFilter)) {
-                numDateMatchFilter = numDateMatchFilter +1;
-            }
-        }
-        return numDateMatchFilter -1;
     }
 
     /*
@@ -771,43 +777,34 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: processLine
+    Import: pLine (String)
+    Export: splitLine (String array)
     */
     public static String[] processLine(String pLine) {
         String[] splitLine;
-        //System.out.println(pLine);
+        //Split the string for every ',' leaving the empty columns blank
         splitLine = pLine.split(",", -1);
 
         return splitLine;
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: lineToCovidRecord
+    Import: pLine (String)
+    Export: covidRecord (CovidRecord)
     */
     public static CovidRecord lineToCovidRecord(String pLine) {
-        int numColInCSV = 13;
+        int numColInCSV = 13; //Number of columns in the .csv
         String[] splitLine = new String[numColInCSV];
+        //Process the string into a string array
         splitLine = processLine(pLine);
         
         CovidRecord covidRecord;
 
-        String date;
-        String iso3;
-        String continent;
-        String countryName;
-        double lat;
-        double lon;
-        int cumPos;
-        int cumDec;
-        int cumRec;
-        int currPos;
-        int hospitalised;
-        int intensiveCare;
-        String nuts;
+        String date, iso3, continent, countryName, nuts;
+        double lat, lon;
+        int cumPos, cumDec, cumRec, currPos, hospitalised, intensiveCare;
 
         date = splitLine[0];
         iso3 = splitLine[1];
@@ -815,6 +812,8 @@ public class MenuProgram {
         countryName = splitLine[3];
         nuts = splitLine[12];
 
+        /*Try assigning the .csv variables to local variables, catching NumberFormatExceptions
+        Mainly used to leave the 'header' blank*/
         try {
             lat = Double.parseDouble(splitLine[4]);
         } catch (NumberFormatException e) {

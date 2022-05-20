@@ -144,6 +144,86 @@ START MenuProgram
             END IF
         WHILE (run IS TRUE)
 
+    MODULE: printTotalCumPos
+    IMPORT: pCovidRecordArray (CovidRecord array), pMainMenuChoice (integer), pMainMenu (String array)
+    EXPORT: none
+    ASSERTION: distinguishes covidRecordArray to an array of only cumulative positive and prints the total
+    ALGORITHM: 
+        cumPosArray <-- distCovRecToCumPos(pCovidRecordArray)
+        totalCumPos <-- calcTotal(cumPosArray)
+        readableOutput <-- calcReadableString(pMainMenuChoice, pMainMenu)
+        out <-- "Cumulative number of positive cases in " + readableOutput + ": " + totalCumPos
+        PRINT out
+
+    MODULE: printTotalCumDec
+    IMPORT: pCovidRecordArray (CovidRecord array), pMainMenuChoice (integer), pMainMenu (String array)
+    EXPORT: none
+    ASSERTION: distinguishes covidRecordArray to an array of only cumulative deceased and prints the total
+    ALGORITHM: 
+        cumDecArray <-- distCovRecToCumPos(pCovidRecordArray)
+        totalCumDec <-- calcTotal(cumDecArray)
+        readableOutput <-- calcReadableString(pMainMenuChoice, pMainMenu)
+        out <-- "Cumulative number of deceased cases in " + readableOutput + ": " + totalCumDec
+        PRINT out
+
+    MODULE: printTotalCumRec
+    IMPORT: pCovidRecordArray (CovidRecord array), pMainMenuChoice (integer), pMainMenu (String array)
+    EXPORT: none
+    ASSERTION: distinguishes covidRecordArray to an array of only cumulative recovered and prints the total
+    ALGORITHM: 
+        cumRecArray <-- distCovRecToCumRec(pCovidRecordArray)
+        totalCumRec <-- calcTotal(cumRecArray)
+        readableOutput <-- calcReadableString(pMainMenuChoice, pMainMenu)
+        out <-- "Cumulative number of recovered cases in " + readableOutput + ": " + totalCumRec
+        PRINT out
+
+    MODULE: printAvgDailyCurrPos
+    IMPORT: pCovidRecordArray (CovidRecord array), pMainMenuChoice (integer), pMainMenu (String array)
+    EXPORT: none
+    ASSERTION: distinguishes covidRecordArray to an array of only cumulative deceased and prints the total
+    ALGORITHM: 
+        avgLengthOfMonth ((31 * 6) + (30 * 5) + 28) / 12
+        currPosArray <-- distCovRecToCurrPos(pCovidRecordArray)
+        totalCurrPos <-- calcTotal(currPosArray)
+        avgDailyCurrPos <-- (totalCurrPos * avgLengthOfMonth) / 365
+        readableOutput <-- calcReadableString(pMainMenuChoice, pMainMenu)
+        out <-- ""The (approximate) average daily currently positive number of cases in " + readableOutput + " is: " + avgDailyCurrPos
+        PRINT out
+
+    MODULE: printPercentRecOverPos
+    IMPORT: pCovidRecordArray (CovidRecord array), pMainMenuChoice (integer), pMainMenu (String array)
+    EXPORT: none
+    ASSERTION: prints the cumulatively recovered over cumulatively positive in a readable format
+    ALGORITHM: 
+        cumPosArray <-- distCovRecToCumPos(pCovidRecordArray)
+        totalCumPos <-- calcTotal(cumPosArray)
+
+        cumRecArray <-- distCovRecToCumRec(pCovidRecordArray)
+        totalCumRec <-- calcTotal(cumRecArray)
+
+        percentRecOverPos <-- (cumRec / cumPos) * 100
+
+        readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
+        out = (percentRecOverPos + "% (" + cumRec + "/" + cumPos + ") cases recovered in " + readableOutput + "."
+        PRINT out
+
+    MODULE: printPercentDecOverPos
+    IMPORT: pCovidRecordArray (CovidRecord array), pMainMenuChoice (integer), pMainMenu (String array)
+    EXPORT: none
+    ASSERTION: prints the cumulatively deceased over cumulatively positive in a readable format
+    ALGORITHM: 
+        cumPosArray <-- distCovRecToCumPos(pCovidRecordArray)
+        totalCumPos <-- calcTotal(cumPosArray)
+
+        cumDecArray <-- distCovRecToCumDec(pCovidRecordArray)
+        totalCumDec <-- calcTotal(cumDecArray)
+
+        percentDecOverPos <-- (cumDec / cumPos) * 100
+
+        readableOutput = calcReadableString(pMainMenuChoice, pMainMenu);
+        out = (percentDecOverPos + "% (" + cumDec + "/" + cumPos + ") cases recovered in " + readableOutput + "."
+        PRINT out
+
     MODULE: 
     IMPORT: 
     EXPORT: 

@@ -224,7 +224,7 @@ START MenuProgram
         out = (percentDecOverPos + "% (" + cumDec + "/" + cumPos + ") cases recovered in " + readableOutput + "."
         PRINT out
 
-    MODULE: 
+    MODULE: calcReadableString
     IMPORT: 
     EXPORT: 
     ASSERTION: 

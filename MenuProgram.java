@@ -445,7 +445,7 @@ public class MenuProgram {
         String output = "";
 
         //If 'pMenuChoice' is between 1-7 (Inclusive)
-        if (pMenuChoice == 1 || pMenuChoice == 2 || pMenuChoice == 3 || pMenuChoice == 4 || pMenuChoice == 5 || pMenuChoice == 6 || pMenuChoice == 7) {
+        if (pMenuChoice <= 7 && 1 <= pMenuChoice) {
             output = pMenu[pMenuChoice];
         //If 'pMenuChoice' equals 8
         } else if (pMenuChoice == 8) {

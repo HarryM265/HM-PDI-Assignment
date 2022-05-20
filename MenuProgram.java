@@ -279,7 +279,7 @@ public class MenuProgram {
                 printPercentRecOverPos(pCovidRecordArray, pMainMenuChoice, pMainMenu);
                 printPercentDecOverPos(pCovidRecordArray, pMainMenuChoice, pMainMenu);
             } else {
-                System.out.println("Input is an invalid menu ID, please try again: \n");
+                System.out.println(menuChoice + " is an invalid menu ID, please try again: \n");
                 //If the user inputs any integer that is not within the menu bounds, ask the user to re-try, with reason
             }
         //Loop while 'run' is 'true'

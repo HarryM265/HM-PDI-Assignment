@@ -107,13 +107,47 @@ START MenuProgram
             ELSE
                 PRINT menuChoice + " is an invalid menu ID, please try again: \n"
             END IF
-        WHILE (run is TRUE)
+        WHILE (run IS TRUE)
+
+    MODULE: displayStatistic
+    IMPORT: pStatMenu (String array), pCovidRecordArray (CovidRecord array), pMainMenu (String array), pMainMenuChoice (int)
+    EXPORT: none
+    ASSERTION: Prints the desired statistics based on user input
+    ALGORITHM: 
+        run <-- TRUE
+        DO
+            menuChoice <-- outputMenu(pStatMenu)
+            IF (menuChoice = 0)
+                run <-- FALSE
+                PRINT "Going back..."
+            ELSE IF (menuChoice = 1)
+                printTotalCumPos(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+            ELSE IF (menuChoice = 2)
+                printTotalCumDec(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+            ELSE IF (menuChoice = 3)
+                printTotalCumRec(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+            ELSE IF (menuChoice = 4)
+                printAvgDailyCurrPos(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+            ELSE IF (menuChoice = 5)
+                printPercentRecOverPos(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+            ELSE IF (menuChoice = 6)
+                printPercentDecOverPos(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+            ELSE IF (menuChoice = 7)
+                printTotalCumPos(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+                printTotalCumDec(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+                printTotalCumRec(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+                printAvgDailyCurrPos(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+                printPercentRecOverPos(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+                printPercentDecOverPos(pCovidRecordArray, pMainMenuChoice, pMainMenu)
+            ELSE 
+                PRINT menuChoice + " is an invalid menu ID, please try again: \n"
+            END IF
+        WHILE (run IS TRUE)
 
     MODULE: 
     IMPORT: 
     EXPORT: 
     ASSERTION: 
     ALGORITHM: 
-
 
 END MenuProgram

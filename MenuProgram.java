@@ -632,24 +632,29 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: setCovRecFilObjContinent (Filter CovidRecord array into new CovidRecord array with values matching filter)
+    Import: pFilterArrayLength (int), pCovRecArr (CovidRecord array), pFilter (String)
+    Export: filterArray (CovidRecord array)
     */
-    public static CovidRecord[] setCovRecFilObjContinent(int pfilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
-        CovidRecord[] filterArray = new CovidRecord[pfilterArrayLength];
+    public static CovidRecord[] setCovRecFilObjContinent(int pFilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[pFilterArrayLength];
         int filterArrayInd = 0;
         String currContinent;
+        //Loop from pCovRecArr[0] to end, incrementing by 1
         for (int i = 0; i < pCovRecArr.length; i++) {
             try {
                 currContinent = pCovRecArr[i].getContinent();
+            //Catch all NullPointerExceptions and set the value to blank
             } catch (NullPointerException e) {
                 currContinent = "";
             }
+            //If 'currContinent' equals 'pFilter'
             if (currContinent.equals(pFilter)) {
                 try {
                     filterArray[filterArrayInd] = pCovRecArr[i];
+                //Catch all ArrayIndexOutOfBoundsExceptions and do nothing
                 } catch (ArrayIndexOutOfBoundsException e) {}
+                //Increment the filter array index used by 1
                 filterArrayInd = filterArrayInd +1;
             }
         }
@@ -657,25 +662,29 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: setCovRecFilObjCountry (Filter CovidRecord array into new CovidRecord array with values matching filter)
+    Import: pFilterArrayLength (int), pCovRecArr (CovidRecord array), pFilter (String)
+    Export: filterArray (CovidRecord array)
     */
-    public static CovidRecord[] setCovRecFilObjCountry(int pfilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
-        CovidRecord[] filterArray = new CovidRecord[pfilterArrayLength];
-        System.out.println(pfilterArrayLength);
+    public static CovidRecord[] setCovRecFilObjCountry(int pFilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
+        CovidRecord[] filterArray = new CovidRecord[pFilterArrayLength];
         int filterArrayInd = 0;
         String currCountryName;
+        //Loop from pCovRecArr[0] to end, incrementing by 1
         for (int i = 0; i < pCovRecArr.length; i++) {
             try {
                 currCountryName = pCovRecArr[i].getCountryName();
+            //Catch any NullPointerExceptions and set currCountryName to ""
             } catch (NullPointerException e) {
                 currCountryName = "";
             }
+            //If 'currCountryName' equals 'pFilter'
             if (currCountryName.equals(pFilter)) {
                 try {
                     filterArray[filterArrayInd] = pCovRecArr[i];
+                //Catch any ArrayIndexOutOfBoundsExceptions and do nothing
                 } catch (ArrayIndexOutOfBoundsException e) {}
+                //Increment the filter array index used by 1
                 filterArrayInd = filterArrayInd +1;
             }
         }
@@ -683,24 +692,29 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: setCovRecFilObjDate (Filter CovidRecord array into new CovidRecord array with values matching filter)
+    Import: pFilterArrayLength (int), pCovRecArr (CovidRecord array), pFilter (String)
+    Export: filterArray (CovidRecord array)
     */
     public static CovidRecord[] setCovRecFilObjDate(int pFilterArrayLength, CovidRecord[] pCovRecArr, String pFilter) {
         CovidRecord[] filterArray = new CovidRecord[pFilterArrayLength];
         int filterArrayInd = 0;
         String currDate;
+        //Loop from pCovRecArr[0] to end, increment by 1
         for (int i = 0; i < pCovRecArr.length; i++) {
             try {
                 currDate = pCovRecArr[i].getDate();
+            //Catch any NullPointerExceptions and set 'currDate' to ""
             } catch (NullPointerException e) {
                 currDate = "";
             }
+            //If 'currDate' equals 'pFilter'
             if (currDate.equals(pFilter)) {
                 try {
                     filterArray[filterArrayInd] = pCovRecArr[i];
+                //Catch any ArrayIndexOutOfBoundsExceptions and do nothing with it
                 } catch (ArrayIndexOutOfBoundsException e) {}
+                //Increment filter array index used by 1
                 filterArrayInd = filterArrayInd +1;
             }
         }
@@ -708,11 +722,11 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: findLengthOfCSV
+    Import: pFileName (String)
+    Export: lineNum (int)
     */
-    public static int findLengthOfCSV(String pCSVName) {
+    public static int findLengthOfCSV(String pFileName) {
         FileInputStream fileStream = null;
         InputStreamReader isr;
         BufferedReader bufRdr;
@@ -720,21 +734,27 @@ public class MenuProgram {
         String line;
 
         try {
-            fileStream = new FileInputStream(pCSVName);
+            fileStream = new FileInputStream(pFileName);
             isr = new InputStreamReader(fileStream);
             bufRdr = new BufferedReader(isr);
             lineNum = 0;
             line = bufRdr.readLine();
 
+            //While the current line is not equal to null
             while (line != null) {
+                //Increment 'lineNum'
                 lineNum++;
+                //Read the next line
                 line = bufRdr.readLine();
             }
             fileStream.close();
+        //Catch any IOExceptions and close the fileStream again
         } catch (IOException e) {
+            //If fileStream is not null
             if (fileStream != null) {
                 try {
                     fileStream.close();
+                //Catch any IOExceptions and do nothing
                 } catch (IOException e2){}
             }
             System.out.println("Error in fileProcessing: " + e.getMessage());
@@ -743,9 +763,9 @@ public class MenuProgram {
     }
 
     /*
-    Method: 
-    Import: 
-    Export: 
+    Method: importFromCSV
+    Import: pFileName (String), pCovidRecordArray (CovidRecord array)
+    Export: pCovidRecordArray (CovidRecord Array)
     */
     public static CovidRecord[] importFromCSV(String pFileName, CovidRecord[] pCovidRecordArray) {
 
@@ -762,18 +782,23 @@ public class MenuProgram {
             lineNum = 0;
             line = bufRdr.readLine();
 
+            //While the current line is not equal to null
             while (line != null) {
+                pCovidRecordArray[lineNum] = lineToCovidRecord(line);
+                //Increment the line number
                 lineNum++;
 
-                pCovidRecordArray[lineNum -1] = lineToCovidRecord(line);
-
+                //'line' = the next line
                 line = bufRdr.readLine();
             }
             fileStream.close();
+        //Catch any IOExceptions and close the fileStream again
         } catch (IOException e) {
+            //If fileStream is not null
             if (fileStream != null) {
                 try {
                     fileStream.close();
+                //catch another IOException and do nothing with it
                 } catch (IOException e2){}
             }
             System.out.println("Error in fileProcessing: " + e.getMessage());

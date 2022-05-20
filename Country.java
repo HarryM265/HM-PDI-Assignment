@@ -4,7 +4,6 @@ Date: 18 Apr 2022
 Purpose: A Country to store country details
 */
 public class Country {
-    //TODO input check
     private String iso3;
     private String continent;
     private String countryName;
@@ -92,27 +91,5 @@ public class Country {
                         "\nLongitude: " + lon;
         return countryString;
     }
-    /* May NOT NEED THIS ***************
-    //Equals method
-    public boolean Equals(Object inObject) {
-        boolean isEqual = false;
-        Country inCountry = null;
-        if (inObject instanceof Country) {
-            inCountry = (Country)inObject;
-            if (iso3.equals(inCountry.getIso3())) {
-                if (continent.equals(inCountry.getContinent())) {
-                    if (countryName.equals(inCountry.getCountryName())) {
-                        if (nuts.equals(inCountry.getNuts())) {
-                            if (lat == inCountry.getLat()) {
-                                if (lon == inCountry.getLon()) {
-                                    isEqual = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return isEqual;
-    } */
+    //No use for isEqual method
 }

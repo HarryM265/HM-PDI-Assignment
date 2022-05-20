@@ -4,7 +4,6 @@ Date: 18 Apr 2022
 Purpose: A record to store covid details
 */
 public class CovidRecord extends Country{
-    //TODO input check
     private String date;
     private int cumulativePos;
     private int cumulativeDec;
@@ -107,5 +106,5 @@ public class CovidRecord extends Country{
                             "\nHospitalised: " + hospitalised + ", Intensive Care: " + intensiveCare;
         return covidRecordString;
     }
-
+    //No use for isEqual method
 }

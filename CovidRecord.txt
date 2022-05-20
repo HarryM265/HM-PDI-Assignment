@@ -1,0 +1,172 @@
+CLASS CovidRecord EXTENDS Country
+
+    date (String)
+    cumulativePositive (integer)
+    cumulativeDeceased (integer)
+    cumulativeRecovered (integer)
+    currentlyPositive (integer)
+    hospitalized (integer)
+    intensiveCare (integer)
+
+    CONSTRUCTOR with PARAMETERS
+    IMPORT: pDate (String), pIso3 (String), pContinent (String), pCountryName (String), pLat (double), 
+            pLon (double), pCumulativePos (int), pCumulativeDec (int), pCumulativeRec (int), pCurrentlyPos (int),
+            pHospitalised (int), pIntensiveCare (int), pNuts (String)
+    EXPORT: none //Construcors never export
+    ASSERTION: Creates object with imported values
+    ALGORITHM: 
+        super (pIso3, pContinent, pCountryName, pNuts, pLat, pLon)
+        date                <-- pDate
+        cumulativePositive  <-- pCumulativePos
+        cumulativeDeceased  <-- pCumulativeDec
+        cumulativeRecovered <-- pCumulativeRec
+        currentlyPositive   <-- pCurrentlyPos
+        hospitalized        <-- pHospitalised
+        intensiveCare       <-- pIntensiveCare
+
+    COPY CONSTRUCTOR
+    IMPORT: pCovidRecord (CovidRecord)
+    EXPORT: none //Construcors never export
+    ASSERTION: Creates object copied from imported object
+    ALGORITHM:
+        super (pCovidRecord)
+        date                <-- pCovidRecord.getDate()
+        cumulativePositive  <-- pCovidRecord.getCumulativePos()
+        cumulativeDeceased  <-- pCovidRecord.getCumulativeDec()
+        cumulativeRecovered <-- pCovidRecord.getCumulativeRec()
+        currentlyPositive   <-- pCovidRecord.getCurrentlyPos()
+        hospitalized        <-- pCovidRecord.getHospitalised()
+        intensiveCare       <-- pCovidRecord.getIntensiveCare()
+
+    DEFAULT CONSTRUCTOR
+    IMPORT: none //Default construcors don't import
+    EXPORT: none //Constructors never export
+    ASSERTION: Creates an object with the default values
+    ALGORITHM:
+        super()
+        date            <-- "25/12/0000"
+        cumulativePos   <-- 2134
+        cumulativeDec   <-- 2134
+        cumulativeRec   <-- 2134
+        currentlyPos    <-- 2134
+        hospitalised    <-- 2134
+        intensiveCare   <-- 2134
+
+    //Accessor methods
+
+    ACCESSOR: getDate
+    IMPORT: none
+    EXPORT: date
+    ASSERTION: Returns the date value
+    ALGORITHM: 
+        RETURN date
+    
+    ACCESSOR: getCumulativePos
+    IMPORT: none
+    EXPORT: cumulativePos
+    ASSERTION: Returns the cumulativePos value
+    ALGORITHM: 
+        RETURN cumulativePos
+
+    ACCESSOR: getCumulativeDec
+    IMPORT: none
+    EXPORT: cumulativeDec
+    ASSERTION: Returns the cumulativeDec value
+    ALGORITHM: 
+        RETURN cumulativeDec
+
+    ACCESSOR: getCumulativeRec
+    IMPORT: none
+    EXPORT: cumulativeRec
+    ASSERTION: Returns the cumulativeRec value
+    ALGORITHM: 
+        RETURN cumulativeRec
+    
+    ACCESSOR: getCurrentlyPos
+    IMPORT: none
+    EXPORT: currentlyPos
+    ASSERTION: Returns the currentlyPositude value
+    ALGORITHM: 
+        RETURN currentlyPos
+
+    ACCESSOR: getHospitalised
+    IMPORT: none
+    EXPORT: hospitalised
+    ASSERTION: Returns the hospitalised value
+    ALGORITHM: 
+        RETURN hospitalised
+
+    ACCESSOR: getIntensiveCare
+    IMPORT: none
+    EXPORT: intensiveCare
+    ASSERTION: Returns the intensiveCare value
+    ALGORITHM: 
+        RETURN intensiveCare
+
+    //Mutator methods
+
+    MUTATOR: setDate
+    IMPORT: pDate
+    EXPORT: none
+    ASSERTION: changes the date to imported value
+    ALGORITHM: 
+        date <-- pDate
+    
+    MUTATOR: setCumulativePos
+    IMPORT: pCumulativePos
+    EXPORT: none
+    ASSERTION: changes the cumulativePos to imported value
+    ALGORITHM: 
+        cumulativePos <-- pCumulativePos
+
+    MUTATOR: setCumulativeDec
+    IMPORT: pCumulativeDec
+    EXPORT: none
+    ASSERTION: changes the cumulativeDec to imported value
+    ALGORITHM: 
+        cumulativeDec <-- pCumulativeDec
+
+    MUTATOR: setCumulativeRec
+    IMPORT: pCumulativeRec
+    EXPORT: none
+    ASSERTION: changes the cumulativeRec to imported value
+    ALGORITHM: 
+        cumulativeRec <-- pCumulativeRec
+    
+    MUTATOR: setCurrentlyPos
+    IMPORT: pCurrentlyPos
+    EXPORT: none
+    ASSERTION: changes the currentlyPos to imported value
+    ALGORITHM: 
+        currentlyPos <-- pCurrentlyPos
+    
+    MUTATOR: setHospitalised
+    IMPORT: pHospitalised
+    EXPORT: none
+    ASSERTION: changes the hospitalised to imported value
+    ALGORITHM: 
+        hospitalised <-- pHospitalised
+
+    MUTATOR: setIntensiveCare
+    IMPORT: pIntensiveCare
+    EXPORT: none
+    ASSERTION: changes the intensiveCaregitude to imported value
+    ALGORITHM: 
+        intensiveCare <-- pIntensiveCare
+
+    ACCESSOR: toString
+    IMPORT: none
+    EXPORT: CovidRecordString (String)
+    ASSERTION: returns a string representation of the object
+    ALGORITHM: 
+        tempString <-- super().toString
+        CovidRecordString <-- tempString + "\n" +
+                        "iso3: " + iso3 + 
+                        ", Continent: " + continent + 
+                        ", Country Name: " + countryName + 
+                        ", Nuts: " + nuts + 
+                        "\nLatitude: " + lat +
+                        "\nLongitude: " + lon
+        RETURN CovidRecordString;
+
+END CLASS

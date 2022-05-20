@@ -33,6 +33,7 @@ public class Country {
 
     //Default constructor
     public Country() {
+        iso3        = "DEFAULT";
         continent   = "DEFAULT";
         countryName = "DEFAULT";
         nuts        = "DEFAULT";

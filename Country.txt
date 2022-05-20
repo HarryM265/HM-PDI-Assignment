@@ -1,0 +1,148 @@
+CLASS Country
+
+    iso3 (String)
+    continent (String)
+    countryName (String)
+    nuts (String)
+    lat (double)
+    lon (double)
+
+    CONSTRUCTOR with PARAMETERS
+    IMPORT: pIso3 (String), pContinent (String), pCountryName (String), pNuts (String),
+            pLat (double), pLon (double)
+    EXPORT: none //Construcors never export
+    ASSERTION: Creates object with imported values
+    ALGORITHM: 
+        iso3        <-- pIso3
+        continent   <-- pContinent
+        countryName <-- pCountryName
+        nuts        <-- pNuts
+        lat         <-- pLat
+        lon         <-- pLon
+
+    COPY CONSTRUCTOR
+    IMPORT: pCountry (Country)
+    EXPORT: none //Construcors never export
+    ASSERTION: Creates object copied from imported object
+    ALGORITHM:
+        iso3        <-- pCountry.getIso3()
+        continent   <-- pCountry.getContinent()
+        countryName <-- pCountry.getCountryName()
+        nuts        <-- pCountry.getNuts()
+        lat         <-- pCountry.getLat()
+        lon         <-- pCountry,getLon()
+
+    DEFAULT CONSTRUCTOR
+    IMPORT: none //Default construcors don't import
+    EXPORT: none //Constructors never export
+    ASSERTION: Creates an object with the default values
+    ALGORITHM:
+        iso3        <-- "DEFAULT"
+        continent   <-- "DEFAULT"
+        countryName <-- "DEFAULT"
+        nuts        <-- "DEFAULT"
+        lat         <-- 0.000001
+        lon         <-- 0.000001
+
+    //Accessor methods
+
+    ACCESSOR: getIso3
+    IMPORT: none
+    EXPORT: iso3
+    ASSERTION: Returns the iso3 value
+    ALGORITHM: 
+        RETURN iso3
+    
+    ACCESSOR: getContinent
+    IMPORT: none
+    EXPORT: continent
+    ASSERTION: Returns the continent value
+    ALGORITHM: 
+        RETURN continent
+
+    ACCESSOR: getCountryName
+    IMPORT: none
+    EXPORT: countryName
+    ASSERTION: Returns the countryName value
+    ALGORITHM: 
+        RETURN countryName
+
+    ACCESSOR: getNuts
+    IMPORT: none
+    EXPORT: nuts
+    ASSERTION: Returns the nuts value
+    ALGORITHM: 
+        RETURN nuts
+    
+    ACCESSOR: getLat
+    IMPORT: none
+    EXPORT: lat
+    ASSERTION: Returns the latitude value
+    ALGORITHM: 
+        RETURN lat
+
+    ACCESSOR: getLon
+    IMPORT: none
+    EXPORT: lon
+    ASSERTION: Returns the longitude value
+    ALGORITHM: 
+        RETURN lon
+
+    //Mutator methods
+
+    MUTATOR: setIso3
+    IMPORT: pIso3
+    EXPORT: none
+    ASSERTION: changes the iso3 to imported value
+    ALGORITHM: 
+        iso3 <-- pIso3
+    
+    MUTATOR: setContinent
+    IMPORT: pContinent
+    EXPORT: none
+    ASSERTION: changes the continent to imported value
+    ALGORITHM: 
+        continent <-- pContinent
+
+    MUTATOR: setCountryName
+    IMPORT: pCountryName
+    EXPORT: none
+    ASSERTION: changes the countryName to imported value
+    ALGORITHM: 
+        countryName <-- pCountryName
+
+    MUTATOR: setNuts
+    IMPORT: pNuts
+    EXPORT: none
+    ASSERTION: changes the nuts to imported value
+    ALGORITHM: 
+        nuts <-- pNuts
+    
+    MUTATOR: setLat
+    IMPORT: pLat
+    EXPORT: none
+    ASSERTION: changes the latitiude to imported value
+    ALGORITHM: 
+        lat <-- pLat
+    
+    MUTATOR: setLon
+    IMPORT: pLon
+    EXPORT: none
+    ASSERTION: changes the longitude to imported value
+    ALGORITHM: 
+        lon <-- pLon
+
+    ACCESSOR: toString
+    IMPORT: none
+    EXPORT: countryString (String)
+    ASSERTION: returns a string representation of the object
+    ALGORITHM: 
+        countryString <-- "iso3: " + iso3 + 
+                        ", Continent: " + continent + 
+                        ", Country Name: " + countryName + 
+                        ", Nuts: " + nuts + 
+                        "\nLatitude: " + lat +
+                        "\nLongitude: " + lon
+        RETURN countryString;
+
+END CLASS

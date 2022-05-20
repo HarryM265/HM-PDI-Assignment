@@ -22,8 +22,6 @@ public class MenuProgram {
         CovidRecord[] covidRecordArray = new CovidRecord[csvLength];
         covidRecordArray = importFromCSV(fileName, covidRecordArray);
 
-        //testCSVImportValues(covidRecordArray);//OUTPUT COVID RECORD ARRAY FOR TESTING PURPOSES
-
         /*A Welcome message that states the name of the organisation that owns the program 
         and a variable counter to detail the number of records loaded*/
         System.out.println("Welcome to the JRC Covid-19 Analaysis Program.\n" + "A total of " + (csvLength -1) + " records have been loaded.\n");

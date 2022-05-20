@@ -2,7 +2,7 @@
 Title: MenuProgram
 Author: Harrison D. Miles
 Created: 18/04/2022
-Modified: 13/05/2022
+Modified: 20/05/2022
 Description: A menu program used to analyse the joint research centre's covid information.
 */
 
@@ -11,9 +11,6 @@ import java.util.*;
 
 public class MenuProgram {
     //(Joint Research Centre Covid-19 Menu Program)
-    //TODO remove all testing code
-    //TODO Comment important code
-    //TODO Write all assertions
 
     public static void main(String[] args) {
 
@@ -64,19 +61,6 @@ public class MenuProgram {
         }
         //Close the scanner (important to only do this once)
         sc.close();
-    }
-
-    //IMPORTANT TO REMOVE THIS
-    public static void testCSVImportValues(CovidRecord[] pCovidRecordArray) {
-        for (int i = 0; i < pCovidRecordArray.length; i++) {
-            String covidRecordString;
-            try {
-                covidRecordString = pCovidRecordArray[i].toString();
-            } catch (NullPointerException e) {
-                covidRecordString = "NullPointerException caught (" + e.getMessage() + ") as CovidRecord[" + i + "]" + " is null.";
-            }
-            System.out.println(covidRecordString + "\n");
-        } 
     }
 
     /*

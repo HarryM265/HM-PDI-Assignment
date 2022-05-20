@@ -1,7 +1,7 @@
 /*
 Author: Harrison Miles
 Date: 18 Apr 2022
-Purpose: A Country to store country details
+Purpose: A record to store country details
 */
 public class Country {
     private String iso3;

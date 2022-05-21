@@ -640,7 +640,7 @@ public class MenuProgram {
                 filterArrayInd = filterArrayInd +1;
             }
         }
-        return (filterArray);
+        return filterArray;
     }
 
     /*

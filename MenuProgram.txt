@@ -225,9 +225,153 @@ START MenuProgram
         PRINT out
 
     MODULE: calcReadableString
-    IMPORT: 
-    EXPORT: 
-    ASSERTION: 
+    IMPORT: pMenuChoice (integer), pMenu (String array)
+    EXPORT: output String
+    ASSERTION: Calculate a more grammatically correct output for outputting statistics
     ALGORITHM: 
+        If (pMenuChoice <= 7 AND 1 <= pMenuChoice) THEN
+            output <-- pMenu[pMenuChoice]
+        ELSE IF (pMenuChoice = 8) THEN
+            output <-- "the entred country"
+        ELSE IF (pMenuChoice = 9) THEN
+            output <-- "the entred date"
+        END IF
+        RETURN output
+
+    MODULE: distCovRecToCumPos
+    IMPORT: pCovRecArray (CovidRecord array)
+    EXPORT: outputArray (integer array)
+    ASSERTION: Distinguishes CovidRecord array to cumulative positive array
+    ALGORITHM:
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            outputArray[i] <-- pCovRecArray[i].getCumulativePos()
+        END FOR
+        RETURN outputArray
+
+    MODULE: distCovRecToCumDec
+    IMPORT: pCovRecArray (CovidRecord array)
+    EXPORT: outputArray (integer array)
+    ASSERTION: Distinguishes CovidRecord array to cumulative deceased array
+    ALGORITHM:
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            outputArray[i] <-- pCovRecArray[i].getCumulativeDec()
+        END FOR
+        RETURN outputArray
+
+    MODULE: distCovRecToCumRec
+    IMPORT: pCovRecArray (CovidRecord array)
+    EXPORT: outputArray (integer array)
+    ASSERTION: Distinguishes CovidRecord array to cumulative recovered array
+    ALGORITHM:
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            outputArray[i] <-- pCovRecArray[i].getCumulativeRec()
+        END FOR
+        RETURN outputArray
+
+    MODULE: distCovRecToCurrPos
+    IMPORT: pCovRecArray (CovidRecord array)
+    EXPORT: outputArray (integer array)
+    ASSERTION: Distinguishes CovidRecord array to currently positive array
+    ALGORITHM:
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            outputArray[i] <-- pCovRecArray[i].getCurrentlyPos()
+        END FOR
+        RETURN outputArray
+
+    MODULE: searchCovRecObjContinent
+    IMPORT: pCovRecArray (CovidRecord array), pFilter (String)
+    EXPORT: numContinentMatchFilter (integer)
+    ASSERTION: Search CovidRecord array for the number of continents that match pFilter
+    ALGORITHM:
+        numContinentMatchFilter <-- 0
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            IF (pCovRecArray[i].getContinent() = pFilter) THEN
+                numContinentMatchFilter <-- numContinentMatchFilter +1
+            END IF
+        END FOR
+        RETURN numContinentMatchFilter
+
+    MODULE: searchCovRecObjCountry
+    IMPORT: pCovRecArray (CovidRecord array), pFilter (String)
+    EXPORT: numCountryMatchFilter (integer)
+    ASSERTION: Search CovidRecord array for the number of Countries that match pFilter
+    ALGORITHM:
+        numCountryMatchFilter <-- 0
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            IF (pCovRecArray[i].getCountry() = pFilter) THEN
+                numCountryMatchFilter <-- numCountryMatchFilter +1
+            END IF
+        END FOR
+        RETURN numCountryMatchFilter
+
+    MODULE: searchCovRecObjDate
+    IMPORT: pCovRecArray (CovidRecord array), pFilter (String)
+    EXPORT: numDateMatchFilter (integer)
+    ASSERTION: Search CovidRecord array for the number of dates that match pFilter
+    ALGORITHM:
+        numDateMatchFilter <-- 0
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            IF (pCovRecArray[i].getDate() = pFilter) THEN
+                numDateMatchFilter <-- numDateMatchFilter +1
+            END IF
+        END FOR
+        RETURN numDateMatchFilter
+
+    MODULE: setCovRecObjContinent
+    IMPORT: pFilterArrayLength (integer), pCovRecArray (CovidRecord array), pFilter (String)
+    EXPORT: filterArray (CovidRecord array)
+    ASSERTION: Search CovidRecord array for the number of continents that match pFilter and add them to an array
+    ALGORITHM:
+        filterArray <-- NEW CovidRecord[] OF LENGTH pFilterArrayLength
+        filterArrayIndex <-- 0
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            IF (pCovRecArray.getContinent() = pFilter) THEN
+                filterArray[filterArrayIndex] <-- pCovRecArray[i]
+                filterArrayIndex <-- filterArrayIndex +1
+            END IF
+        END FOR
+        RETURN filterArray
+
+    MODULE: setCovRecObjCountry
+    IMPORT: pFilterArrayLength (integer), pCovRecArray (CovidRecord array), pFilter (String)
+    EXPORT: filterArray (CovidRecord array)
+    ASSERTION: Search CovidRecord array for the number of countries that match pFilter and add them to an array
+    ALGORITHM:
+        filterArray <-- NEW CovidRecord[] OF LENGTH pFilterArrayLength
+        filterArrayIndex <-- 0
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            IF (pCovRecArray.getCountry() = pFilter) THEN
+                filterArray[filterArrayIndex] <-- pCovRecArray[i]
+                filterArrayIndex <-- filterArrayIndex +1
+            END IF
+        END FOR
+        RETURN filterArray
+
+    MODULE: setCovRecObjDate
+    IMPORT: pFilterArrayLength (integer), pCovRecArray (CovidRecord array), pFilter (String)
+    EXPORT: filterArray (CovidRecord array)
+    ASSERTION: Search CovidRecord array for the number of dates that match pFilter and add them to an array
+    ALGORITHM:
+        filterArray <-- NEW CovidRecord[] OF LENGTH pFilterArrayLength
+        filterArrayIndex <-- 0
+        FOR i <-- 0 TO i < pCovRecArray.Length INCREMENT BY +1
+            IF (pCovRecArray.getDate() = pFilter) THEN
+                filterArray[filterArrayIndex] <-- pCovRecArray[i]
+                filterArrayIndex <-- filterArrayIndex +1
+            END IF
+        END FOR
+        RETURN filterArray
+
+    MODULE:
+    IMPORT:
+    EXPORT:
+    ASSERTION:
+    ALGORITHM:
+
+    MODULE:
+    IMPORT:
+    EXPORT:
+    ASSERTION:
+    ALGORITHM:
 
 END MenuProgram

@@ -362,11 +362,43 @@ START MenuProgram
         END FOR
         RETURN filterArray
 
-    MODULE:
-    IMPORT:
-    EXPORT:
-    ASSERTION:
+    MODULE: findLengthOfCSV
+    IMPORT: pFileName (String)
+    EXPORT: lineNum (integer)
+    ASSERTION: Find the length of a .csv file
     ALGORITHM:
+        file <-- OPENFILE pFileName
+        lineNum <-- 0
+        READ line FROM file
+        WHILE (line IS NOT EMPTY) 
+            lineNum <-- lineNum +1
+            READ line FROM file
+        END WHILE
+        CLOSE FILE file
+        RETURN luneNum
+
+    MODULE: importFromCSV
+    IMPORT: pFileName (String), pCovidRecordArray (CovidRecord array)
+    EXPORT: pCovidRecordArray (CovidRecord array)
+    ASSERTION: Import data from a .csv file
+    ALGORITHM:
+        file <-- OPENFILE pFileName
+        lineNum <-- 0
+        READ line FROM file
+        WHILE (line IS NOT EMPTY) 
+            pCovidRecordArray[lineNum] <-- lineToCovidRecord(line)
+            lineNum <-- lineNum +1
+            READ line FROM file
+        END WHILE
+        CLOSE FILE file
+        RETURN pCovidRecordArray
+
+    MODULE: lineToCovidRecord
+    IMPORT: pLine (String)
+    EXPORT: covidRecord (CovidRecord)
+    ASSERTION: Separate pLine into separate values and return a CovidRecord
+    ALGORITHM:
+        splitLine <-- pLine SPLIT BY "," (INCLUDING BLANK COLUMNS)
 
     MODULE:
     IMPORT:

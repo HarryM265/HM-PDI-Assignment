@@ -789,28 +789,14 @@ public class MenuProgram {
     }
 
     /*
-    Method: processLine
-    Import: pLine (String)
-    Export: splitLine (String array)
-    */
-    public static String[] processLine(String pLine) {
-        String[] splitLine;
-        //Split the string for every ',' leaving the empty columns blank
-        splitLine = pLine.split(",", -1);
-
-        return splitLine;
-    }
-
-    /*
     Method: lineToCovidRecord
     Import: pLine (String)
     Export: covidRecord (CovidRecord)
     */
     public static CovidRecord lineToCovidRecord(String pLine) {
-        int numColInCSV = 13; //Number of columns in the .csv
-        String[] splitLine = new String[numColInCSV];
+        String[] splitLine;
         //Process the string into a string array
-        splitLine = processLine(pLine);
+        splitLine = pLine.split(",", -1);
         
         CovidRecord covidRecord;
 

@@ -860,28 +860,28 @@ public class MenuProgram {
 
     /*
     Method: averageOfArray
-    Import: array (1D integer array)
+    Import: pArray (1D integer array)
     Export: b (double)
     */
-    public static double averageOfArray(int[] array) {
+    public static double averageOfArray(int[] pArray) {
         int total = 0;
         double avg = 0.0;
 
-        total = calcTotal(array);
-        avg = (double)(total / (array.length));
-        //set 'b' to mean of array and cast to a double
+        total = calcTotal(pArray);
+        avg = (double)(total / (pArray.length));
+        //set 'b' to mean of pArray and cast to a double
         return avg;
     }
 
     /*
     Method: calcTotal
-    Import: array (1D integer array)
+    Import: pArray (1D integer array)
     Export: a (integer)
     */
-    public static int calcTotal(int[] array) {
+    public static int calcTotal(int[] pArray) {
         int total = 0;
-        for (int i = 0; i < array.length; i++) {
-            total = total + array[i];
+        for (int i = 0; i < pArray.length; i++) {
+            total = total + pArray[i];
         }
         return total;
     }
